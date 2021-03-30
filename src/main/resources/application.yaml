@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/music_catalog
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: always
+    username: postgres
+    password: wgvo27
+
+#  h2:
+#    console:
+#      enabled: true
+#      path: /h2
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+server:
+  port: 8080
