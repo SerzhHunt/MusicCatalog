@@ -13,10 +13,10 @@ spring:
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-    generate-ddl: true
+    generate-ddl: false
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
     show-sql: true
 
 server:
-  port: 8080
+  port: 8082

@@ -1,10 +1,8 @@
 package com.epam.musiccatalog.model;
 
-import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +11,8 @@ import static javax.persistence.GenerationType.*;
 
 @Entity(name = "Song")
 @Table(name = "song")
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode(exclude = {"authors"})
-@ToString(exclude = {"authors"})
-public class Song implements Serializable {
-    private static final long serialVersionUID = 1L;
+@Data
+public class SongEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -35,7 +27,7 @@ public class Song implements Serializable {
 
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", referencedColumnName = "id")
-    private List<Author> authors = new ArrayList<>();
+    private List<AuthorEntity> authors = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY,
             cascade = {
@@ -45,5 +37,5 @@ public class Song implements Serializable {
     @JoinColumn(name = "album_id",
             referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "fk_album_id"))
-    private Album album;
+    private AlbumEntity album;
 }

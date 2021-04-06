@@ -19,7 +19,7 @@ public class AlbumController {
         this.service = service;
     }
 
-    @GetMapping("all")
+    @GetMapping
     public ResponseEntity<List<AlbumDto>> getAllAlbums() {
         return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
     }

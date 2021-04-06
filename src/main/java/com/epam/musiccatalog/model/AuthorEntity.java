@@ -5,22 +5,14 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "Author")
 @Table(name = "author")
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode(exclude = {"albums"})
-@ToString
-public class Author implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+@Data
+public class AuthorEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,10 +30,6 @@ public class Author implements Serializable {
     @JsonFormat(pattern = "yyyy/MM/dd")
     private LocalDate birthDate;
 
-    @ManyToMany(mappedBy = "authors",
-            fetch = FetchType.EAGER,
-            cascade = {
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST})
-    private List<Album> albums = new ArrayList<>();
+    @OneToMany(mappedBy = "album",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<AuthorAlbum> albums = new ArrayList<>();
 }

@@ -20,7 +20,7 @@ public class AuthorController {
         this.service = service;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<AuthorDto>> getAllAuthors() {
         return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
     }
