@@ -4,15 +4,13 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
 
 import static javax.persistence.GenerationType.*;
 
 @Entity(name = "Song")
 @Table(name = "song")
 @Data
-public class SongEntity {
+public class Song {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -25,9 +23,14 @@ public class SongEntity {
     @Column(nullable = false)
     private Duration duration;
 
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id", referencedColumnName = "id")
-    private List<AuthorEntity> authors = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.REMOVE,
+                    CascadeType.MERGE})
+    @JoinColumn(name = "author_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "fk_author_id"))
+    private Author author;
 
     @ManyToOne(fetch = FetchType.LAZY,
             cascade = {
@@ -37,5 +40,5 @@ public class SongEntity {
     @JoinColumn(name = "album_id",
             referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "fk_album_id"))
-    private AlbumEntity album;
+    private Album album;
 }

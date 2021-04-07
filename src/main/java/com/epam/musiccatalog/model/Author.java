@@ -12,7 +12,7 @@ import java.util.List;
 @Entity(name = "Author")
 @Table(name = "author")
 @Data
-public class AuthorEntity {
+public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +30,9 @@ public class AuthorEntity {
     @JsonFormat(pattern = "yyyy/MM/dd")
     private LocalDate birthDate;
 
-    @OneToMany(mappedBy = "album",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<AuthorAlbum> albums = new ArrayList<>();
+    @OneToMany(mappedBy = "author",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Album> albums = new ArrayList<>();
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Song> songs = new ArrayList<>();
 }

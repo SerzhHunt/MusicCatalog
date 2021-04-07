@@ -1,6 +1,6 @@
 package com.epam.musiccatalog.service.impl;
 
-import com.epam.musiccatalog.model.AuthorEntity;
+import com.epam.musiccatalog.model.Author;
 import com.epam.musiccatalog.dto.AuthorDto;
 import com.epam.musiccatalog.repository.AuthorRepository;
 import com.epam.musiccatalog.service.AuthorService;
@@ -36,7 +36,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     @Transactional
     public AuthorDto getAuthorById(Long id) {
-        Optional<AuthorEntity> author = authorRepository.findById(id);
+        Optional<Author> author = authorRepository.findById(id);
         if (author.isPresent()) {
             return mapper.map(author.get(), AuthorDto.class);
         } else {

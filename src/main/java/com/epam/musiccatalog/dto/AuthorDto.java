@@ -15,4 +15,5 @@ public class AuthorDto implements Serializable {
     private String lastname;
     private LocalDate birthDate;
     private List<AlbumDto> albums = new ArrayList<>();
+    private List<SongDto> songs = new ArrayList<>();
 }
