@@ -29,18 +29,7 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public SongDto getSongById(Long albumId, Long songId) {
-        Optional<Album> album = albumRepository.findById(albumId);
-        Song song = album.get().getSongs().get(0);
-        return mapper.map(song,SongDto.class);
-//        if (album.isPresent()) {
-//            Optional<Song> song = album.get().getSongs()
-//                    .stream()
-//                    .filter(s -> s.getId().equals(songId))
-//                    .findFirst();
-//            return mapper.map(song, SongDto.class);
-//        } else {
-//            throw new RuntimeException();
-//        }
+        return null;
     }
 
     @Override

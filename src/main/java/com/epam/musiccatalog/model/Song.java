@@ -1,9 +1,12 @@
 package com.epam.musiccatalog.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.GenerationType.*;
 
@@ -23,14 +26,8 @@ public class Song {
     @Column(nullable = false)
     private Duration duration;
 
-    @ManyToOne(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.REMOVE,
-                    CascadeType.MERGE})
-    @JoinColumn(name = "author_id",
-            referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_author_id"))
-    private Author author;
+    @ManyToMany(mappedBy = "songs", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Author> authors = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY,
             cascade = {
@@ -40,5 +37,6 @@ public class Song {
     @JoinColumn(name = "album_id",
             referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "fk_album_id"))
+    @JsonIgnoreProperties("songs")
     private Album album;
 }

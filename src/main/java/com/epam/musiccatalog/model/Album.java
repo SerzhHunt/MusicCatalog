@@ -1,6 +1,6 @@
 package com.epam.musiccatalog.model;
 
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -22,15 +22,6 @@ public class Album {
 
     @Column(nullable = false, updatable = false)
     private LocalDate createdDate;
-
-    @ManyToOne(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST})
-    @JoinColumn(name = "author_id",
-            referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_author_album_id"))
-    private Author author;
 
     @OneToMany(mappedBy = "album", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Song> songs = new ArrayList<>();

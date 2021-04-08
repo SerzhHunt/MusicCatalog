@@ -1,9 +1,11 @@
 package com.epam.musiccatalog.dto;
 
-import lombok.*;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class SongDto implements Serializable {
@@ -11,6 +13,6 @@ public class SongDto implements Serializable {
 
     private String name;
     private Duration duration;
-    private AuthorDto author;
-    private AlbumDto album;
+    private List<AuthorDto> authors = new ArrayList<>();
+    private AlbumDto albumDto;
 }

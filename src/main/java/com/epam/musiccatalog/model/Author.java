@@ -1,7 +1,7 @@
 package com.epam.musiccatalog.model;
 
 import com.fasterxml.jackson.annotation.*;
-import lombok.*;
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -30,9 +30,8 @@ public class Author {
     @JsonFormat(pattern = "yyyy/MM/dd")
     private LocalDate birthDate;
 
-    @OneToMany(mappedBy = "author",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<Album> albums = new ArrayList<>();
-
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "song_id", referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "fk_song_id"))
     private List<Song> songs = new ArrayList<>();
 }
