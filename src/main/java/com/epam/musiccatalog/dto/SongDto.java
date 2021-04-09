@@ -1,20 +1,16 @@
 package com.epam.musiccatalog.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class SongDto implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class SongDto {
 
     private String name;
     private Duration duration;
-    private List<AuthorDto> authors = new ArrayList<>();
-    @JsonIgnore
-    private AlbumDto albumDto;
+    private List<String> authorNames = new ArrayList<>();
+    private String albumName;
 }

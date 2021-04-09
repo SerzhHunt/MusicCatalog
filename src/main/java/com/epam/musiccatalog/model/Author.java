@@ -2,6 +2,7 @@ package com.epam.musiccatalog.model;
 
 import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -12,12 +13,8 @@ import java.util.List;
 @Entity(name = "Author")
 @Table(name = "author")
 @Data
-public class Author {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, updatable = false)
-    private Long id;
+@EqualsAndHashCode(callSuper = false)
+public class Author extends AbstractEntity{
 
     @Column(nullable = false)
     private String firstname;

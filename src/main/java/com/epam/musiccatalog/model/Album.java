@@ -1,6 +1,7 @@
 package com.epam.musiccatalog.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -10,12 +11,8 @@ import java.util.List;
 @Entity(name = "Album")
 @Table(name = "album")
 @Data
-public class Album {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false, nullable = false)
-    private Long id;
+@EqualsAndHashCode(callSuper = false)
+public class Album extends AbstractEntity{
 
     @Column(nullable = false)
     private String name;

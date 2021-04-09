@@ -2,23 +2,18 @@ package com.epam.musiccatalog.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-import static javax.persistence.GenerationType.*;
-
 @Entity(name = "Song")
 @Table(name = "song")
 @Data
-public class Song {
-
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(insertable = false, updatable = false)
-    private Long id;
+@EqualsAndHashCode(callSuper = false)
+public class Song extends AbstractEntity {
 
     @Column(nullable = false)
     private String name;

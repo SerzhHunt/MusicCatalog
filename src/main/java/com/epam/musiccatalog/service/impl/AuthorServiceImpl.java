@@ -1,6 +1,7 @@
 package com.epam.musiccatalog.service.impl;
 
 import com.epam.musiccatalog.model.Author;
+import com.epam.musiccatalog.model.Song;
 import com.epam.musiccatalog.dto.AuthorDto;
 import com.epam.musiccatalog.repository.AuthorRepository;
 import com.epam.musiccatalog.service.AuthorService;
@@ -11,9 +12,11 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service("authorService")
 @RequiredArgsConstructor
+@Transactional
 public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
     private final MapperFacade mapper;
@@ -26,11 +29,10 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public AuthorDto getAuthorById(Long id) {
         Optional<Author> author = authorRepository.findById(id);
-        if (author.isPresent()) {
-            return mapper.map(author.get(), AuthorDto.class);
-        } else {
-            throw new RuntimeException();
+        if (author.isEmpty()) {
+            throw new RuntimeException(); //TODO authorNotFoundException
         }
+        return authorToDto(author.get());
     }
 
     @Override
@@ -45,5 +47,18 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public void delete(Long id) {
+    }
+
+    private AuthorDto authorToDto(Author author) {
+        AuthorDto authorDto = mapper.map(author, AuthorDto.class);
+        authorDto.setSongNames(getSongNamesOfAuthor(author));
+        return authorDto;
+    }
+
+    private List<String> getSongNamesOfAuthor(Author author) {
+        return author.getSongs()
+                .stream()
+                .map(Song::getName)
+                .collect(Collectors.toList());
     }
 }
