@@ -10,6 +10,7 @@ import java.util.List;
 @Data
 public class AlbumDto {
 
+    private Long id;
     private String name;
     private LocalDate createdDate;
     private Duration duration;

@@ -9,6 +9,7 @@ import java.util.List;
 @Data
 public class SongDto {
 
+    private Long id;
     private String name;
     private Duration duration;
     private List<String> authorNames = new ArrayList<>();
