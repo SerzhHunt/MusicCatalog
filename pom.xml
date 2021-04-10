@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.epam</groupId>
+    <artifactId>musiccatalog</artifactId>
+    <version>0.0.1</version>
+    <name>MusicCatalog</name>
+    <description>Training project from EPAM</description>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.4.4</version>
         <relativePath/>
     </parent>
-    <groupId>com.epam</groupId>
-    <artifactId>musiccatalog</artifactId>
-    <version>0.0.1</version>
-    <name>MusicCatalog</name>
-    <description>Training project from EPAM</description>
+
     <properties>
         <java.version>11</java.version>
         <spring.version>2.4.4</spring.version>
+        <log4j.version>2.14.0</log4j.version>
         <junit.version>5.6.2</junit.version>
         <orika.version>1.9.0</orika.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -28,6 +34,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
             <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.rakugakibox.spring.boot</groupId>
+            <artifactId>orika-spring-boot-starter</artifactId>
+            <version>${orika.version}</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -58,10 +69,14 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>net.rakugakibox.spring.boot</groupId>
-            <artifactId>orika-spring-boot-starter</artifactId>
-            <version>${orika.version}</version>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
     </dependencies>
 </project>
