@@ -17,16 +17,6 @@
         <relativePath/>
     </parent>
 
-    <properties>
-        <java.version>11</java.version>
-        <spring.version>2.4.4</spring.version>
-        <log4j.version>2.14.0</log4j.version>
-        <junit.version>5.6.2</junit.version>
-        <orika.version>1.9.0</orika.version>
-        <swagger2.version>3.0.0</swagger2.version>
-        <jackson.version>2.12.2</jackson.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -64,6 +54,11 @@
             <version>${jackson.version}</version>
         </dependency>
         <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>2.0.1.Final</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <version>${spring.version}</version>
@@ -84,7 +79,12 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>${swagger2.version}</version>
+            <version>${springfox-swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${springfox-swagger.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -92,4 +92,15 @@
             <optional>true</optional>
         </dependency>
     </dependencies>
+
+    <properties>
+        <java.version>11</java.version>
+        <spring.version>2.4.4</spring.version>
+        <log4j.version>2.14.0</log4j.version>
+        <junit.version>5.6.2</junit.version>
+        <orika.version>1.9.0</orika.version>
+        <springfox-swagger.version>2.9.2</springfox-swagger.version>
+        <jackson.version>2.12.2</jackson.version>
+    </properties>
+
 </project>
