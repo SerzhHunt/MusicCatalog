@@ -3,8 +3,8 @@ package com.epam.musiccatalog.dto;
 import lombok.Data;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 public class SongDto {
@@ -12,6 +12,6 @@ public class SongDto {
     private Long id;
     private String name;
     private Duration duration;
-    private List<String> authorNames = new ArrayList<>();
+    private Set<String> authorNames = new HashSet<>();
     private String albumName;
 }

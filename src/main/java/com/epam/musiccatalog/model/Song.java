@@ -32,6 +32,5 @@ public class Song extends AbstractEntity {
     @JoinColumn(name = "album_id",
             referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "fk_album_id"))
-    @JsonIgnoreProperties("songs")
     private Album album;
 }

@@ -1,12 +1,14 @@
 package com.epam.musiccatalog.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
-import java.io.Serializable;
 
 @MappedSuperclass
-public abstract class AbstractEntity implements Serializable {
+@Data
+public abstract class AbstractEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, updatable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
     private Long id;
 }

@@ -85,8 +85,8 @@ public class AlbumServiceImpl implements AlbumService {
                 log.error("album not found by id {} ...", id);
                 throw new AlbumNotFoundException(id);
             }
-            Album savedAlbum = albumRepository.save(updateAlbum(albumById.get(), albumDto));
-            return albumToDto(savedAlbum);
+            Album updatedAlbum = albumRepository.save(updateAlbum(albumById.get(), albumDto));
+            return albumToDto(updatedAlbum);
         } catch (Exception e) {
             String message = "exception while update album in db";
             log.error(message, e.getMessage());

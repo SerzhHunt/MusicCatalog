@@ -12,7 +12,7 @@ import java.util.List;
 @Table(name = "album")
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Album extends AbstractEntity{
+public class Album extends AbstractEntity {
 
     @Column(nullable = false)
     private String name;
@@ -20,6 +20,8 @@ public class Album extends AbstractEntity{
     @Column(nullable = false, updatable = false)
     private LocalDate createdDate;
 
-    @OneToMany(mappedBy = "album", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "album",
+            cascade = {CascadeType.ALL, CascadeType.MERGE},
+            orphanRemoval = true)
     private List<Song> songs = new ArrayList<>();
 }

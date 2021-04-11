@@ -84,8 +84,8 @@ public class AuthorServiceImpl implements AuthorService {
                 log.error("author not found by id {} ...", id);
                 throw new AuthorNotFoundException(id);
             }
-            Author savedAuthor = authorRepository.save(updateAuthor(authorById.get(), authorDto));
-            return authorToDto(savedAuthor);
+            Author updatedAuthor = authorRepository.save(updateAuthor(authorById.get(), authorDto));
+            return authorToDto(updatedAuthor);
         } catch (Exception e) {
             String message = "exception while update author in db";
             log.error(message, e.getMessage());

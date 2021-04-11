@@ -1,17 +1,18 @@
 package com.epam.musiccatalog.service;
 
 import com.epam.musiccatalog.dto.AuthorDto;
+import com.epam.musiccatalog.exception.author.AuthorException;
 
 import java.util.List;
 
 public interface AuthorService {
-    List<AuthorDto> getAll();
+    List<AuthorDto> getAll() throws AuthorException;
 
-    AuthorDto getAuthorById(Long id);
+    AuthorDto getAuthorById(Long id) throws AuthorException;
 
-    AuthorDto save(AuthorDto authorDto);
+    AuthorDto save(AuthorDto authorDto) throws AuthorException;
 
-    AuthorDto update(Long id, AuthorDto authorDto);
+    AuthorDto update(Long id, AuthorDto authorDto) throws AuthorException;
 
-    void delete(Long id);
+    void delete(Long id) throws AuthorException;
 }
