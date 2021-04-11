@@ -23,6 +23,8 @@
         <log4j.version>2.14.0</log4j.version>
         <junit.version>5.6.2</junit.version>
         <orika.version>1.9.0</orika.version>
+        <swagger2.version>3.0.0</swagger2.version>
+        <jackson.version>2.12.2</jackson.version>
     </properties>
 
     <dependencies>
@@ -47,6 +49,21 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <version>${spring.version}</version>
@@ -63,6 +80,11 @@
             <artifactId>junit-jupiter-api</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger2.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
