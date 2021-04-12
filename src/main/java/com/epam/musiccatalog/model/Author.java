@@ -5,7 +5,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +21,7 @@ import java.util.List;
 @Table(name = "author")
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Author extends AbstractEntity{
+public class Author extends AbstractEntity {
 
     @Column(nullable = false)
     private String firstname;

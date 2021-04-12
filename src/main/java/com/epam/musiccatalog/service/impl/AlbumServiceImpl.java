@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -67,6 +68,7 @@ public class AlbumServiceImpl implements AlbumService {
     public AlbumDto save(AlbumDto albumDto) throws AlbumException {
         try {
             Album savedAlbum = albumRepository.save(dtoToAuthor(albumDto));
+            savedAlbum.setCreatedDate(LocalDate.now());
             return mapper.map(savedAlbum, AlbumDto.class);
         } catch (Exception e) {
             String message = "exception while save album in db";
@@ -143,7 +145,6 @@ public class AlbumServiceImpl implements AlbumService {
         }
         album.setId(albumDto.getId());
         album.setName(albumDto.getName());
-        album.setCreatedDate(albumDto.getCreatedDate());
         return album;
     }
 

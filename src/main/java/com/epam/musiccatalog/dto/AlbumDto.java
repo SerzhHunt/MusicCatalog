@@ -3,7 +3,6 @@ package com.epam.musiccatalog.dto;
 import lombok.Data;
 
 import java.time.Duration;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +11,6 @@ public class AlbumDto {
 
     private Long id;
     private String name;
-    private LocalDate createdDate;
     private Duration duration;
     private List<String> songNames = new ArrayList<>();
 }
