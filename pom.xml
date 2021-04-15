@@ -1,14 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <groupId>com.epam</groupId>
-    <artifactId>musiccatalog</artifactId>
-    <version>0.0.1</version>
-    <name>MusicCatalog</name>
-    <description>Training project from EPAM</description>
+    <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -16,6 +9,20 @@
         <version>2.4.4</version>
         <relativePath/>
     </parent>
+
+    <groupId>com.epam</groupId>
+    <artifactId>musiccatalog</artifactId>
+    <version>0.0.1</version>
+    <name>MusicCatalog</name>
+    <description>Training project from EPAM</description>
+
+    <properties>
+        <java.version>11</java.version>
+        <spring.version>2.4.4</spring.version>
+        <junit-5.version>5.6.2</junit-5.version>
+        <orika-mapper.version>1.9.0</orika-mapper.version>
+        <springfox-swagger.version>2.9.2</springfox-swagger.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -31,7 +38,7 @@
         <dependency>
             <groupId>net.rakugakibox.spring.boot</groupId>
             <artifactId>orika-spring-boot-starter</artifactId>
-            <version>${orika.version}</version>
+            <version>${orika-mapper.version}</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -52,13 +59,13 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.version}</version>
+            <version>${junit-5.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit.version}</version>
+            <version>${junit-5.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -77,49 +84,4 @@
             <optional>true</optional>
         </dependency>
     </dependencies>
-
-    <properties>
-        <java.version>11</java.version>
-        <spring.version>2.4.4</spring.version>
-        <log4j.version>2.14.0</log4j.version>
-        <junit.version>5.6.2</junit.version>
-        <orika.version>1.9.0</orika.version>
-        <springfox-swagger.version>2.9.2</springfox-swagger.version>
-        <jackson.version>2.12.2</jackson.version>
-    </properties>
-    <plugins>
-        <plugin>
-            <groupId>com.github.kongchen</groupId>
-            <artifactId>swagger-maven-plugin</artifactId>
-            <version>3.1.5</version>
-            <configuration>
-                <apiSources>
-                    <apiSource>
-                        <springmvc>true</springmvc>
-                        <locations>
-                            <location>com.dgs.spring.springbootswagger.controller.EmployeeController</location>
-                            <location>com.dgs.spring.springbootswagger.controller.FooController</location>
-                        </locations>
-                        <schemes>
-                            <scheme>http</scheme>
-                        </schemes>
-                        <host>127.0.0.1:8080</host>
-                        <basePath>/</basePath>
-                        <info>
-                            <title>My REST Api</title>
-                            <version>1.1.1</version>
-                        </info>
-                        <swaggerDirectory>${basedir}/src/main/resources/</swaggerDirectory>
-                    </apiSource>
-                </apiSources>
-            </configuration>
-            <executions>
-                <execution>
-                    <goals>
-                        <goal>generate</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
-    </plugins>
 </project>

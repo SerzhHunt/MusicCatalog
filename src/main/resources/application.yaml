@@ -4,7 +4,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     initialization-mode: always
     username: postgres
-    password: wgvo27
+    password: postgres
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
@@ -15,3 +15,12 @@ spring:
 
 server:
   port: 8080
+
+#Not work =(
+#logging:
+#  level: error
+#  file:
+#    name: app.log
+#  pattern:
+#    console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+#    file: "%d %p %c{1.} [%t] %m%n"

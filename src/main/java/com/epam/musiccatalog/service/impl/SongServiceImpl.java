@@ -1,10 +1,8 @@
 package com.epam.musiccatalog.service.impl;
 
 import com.epam.musiccatalog.dto.SongDto;
-import com.epam.musiccatalog.exception.album.AlbumNotFoundException;
-import com.epam.musiccatalog.exception.song.SongConverterException;
-import com.epam.musiccatalog.exception.song.SongException;
-import com.epam.musiccatalog.exception.song.SongNotFoundException;
+import com.epam.musiccatalog.exception.AlbumNotFoundException;
+import com.epam.musiccatalog.exception.SongNotFoundException;
 import com.epam.musiccatalog.model.Album;
 import com.epam.musiccatalog.model.Song;
 import com.epam.musiccatalog.repository.AlbumRepository;
@@ -28,123 +26,68 @@ public class SongServiceImpl implements SongService {
     private final MapperFacade mapper;
 
     @Override
-    @Transactional
-    public List<SongDto> getAll() throws SongException {
-        try {
-            List<SongDto> songs = new ArrayList<>();
-            for (Song song : songRepository.findAll()) {
-                songs.add(songToDto(song));
-            }
-            return songs;
-        } catch (Exception e) {
-            String message = "exception while getting all songs";
-            log.error(message);
-            throw new SongException(message, e);
+    public List<SongDto> getAll() {
+        return mapper.mapAsList(songRepository.findAll(), SongDto.class);
+    }
+
+    @Override
+    public SongDto getSongById(Long albumId, Long songId) {
+        Optional<Album> album = albumRepository.findById(albumId);
+        Optional<Song> song = songRepository.findSongByIdInAlbumById(albumId, songId);
+
+        if (album.isEmpty()) {
+            log.error("album not found by id {} ...", albumId);
+            throw new AlbumNotFoundException(albumId);
         }
+
+        if (song.isEmpty()) {
+            log.error("song not found by id {} ...", songId);
+            throw new SongNotFoundException(songId);
+        }
+        return songToDto(song.get());
     }
 
     @Override
     @Transactional
-    public SongDto getSongById(Long albumId, Long songId) throws SongException {
-        try {
-            Optional<Song> song = songRepository.findSongByIdInAlbumById(albumId, songId);
+    public SongDto save(Long albumId, SongDto songDto) {
+        Optional<Album> album = albumRepository.findById(albumId);
 
-            if (song.isEmpty()) {
-                log.error("song not found by id {} ...", songId);
-                throw new SongNotFoundException(songId);
-            }
-            return songToDto(song.get());
-        } catch (Exception e) {
-            String message = "exception while getting song from db";
-            log.error(message, e.getMessage());
-            throw new SongException(message, e);
+        if (album.isEmpty()) {
+            log.error("album not found by id {} ...", albumId);
+            throw new AlbumNotFoundException(albumId);
         }
+
+        Song savedSong = songRepository.save(mapper.map(songDto, Song.class));
+        return songToDto(savedSong);
     }
 
     @Override
     @Transactional
-    public SongDto save(Long albumId, SongDto songDto) throws SongException {
-        try {
-            Optional<Album> album = albumRepository.findById(albumId);
-            if (album.isEmpty()) {
-                log.error("album not found by id {} ...", albumId);
-                throw new AlbumNotFoundException(albumId);
-            }
-            Song savedSong = songRepository.save(dtoToSong(songDto));
-            return songToDto(savedSong);
-        } catch (Exception e) {
-            String message = "exception while save song in db";
-            log.error(message, e.getMessage());
-            throw new SongException(message, e);
+    public SongDto update(Long id, SongDto songDto) {
+        Optional<Song> song = songRepository.findById(id);
+
+        if (song.isEmpty()) {
+            log.error("song not found by id {} ...", id);
+            throw new SongNotFoundException(id);
         }
+
+        Song updatedSong = songRepository.save(updateSong(song.get(), songDto));
+        return songToDto(updatedSong);
     }
 
     @Override
-    @Transactional
-    public SongDto update(Long id, SongDto songDto) throws SongException {
-        try {
-            Optional<Song> song = songRepository.findById(id);
-
-            if (song.isEmpty()) {
-                log.error("song not found by id {} ...", id);
-                throw new SongNotFoundException(id);
-            }
-            Song updatedSong = songRepository.save(updateSong(song.get(), songDto));
-            return songToDto(updatedSong);
-        } catch (Exception e) {
-            String message = "exception while update song in db";
-            log.error(message, e.getMessage());
-            throw new SongException(message, e);
-        }
+    public void delete(Long id) {
+        songRepository.deleteById(id);
     }
 
-    @Override
-    @Transactional
-    public void delete(Long id) throws SongException {
-        try {
-            songRepository.deleteById(id);
-        } catch (Exception e) {
-            String message = "exception while delete author in db";
-            log.error(message, e.getMessage());
-            throw new SongException(message, e);
-        }
+    private SongDto songToDto(Song song) {
+        SongDto songDto = mapper.map(song, SongDto.class);
+        songDto.setAuthorNames(getAuthorNamesOfSong(song));
+        songDto.setAlbumName(getAlbumNameOfSong(song));
+        return songDto;
     }
 
-    private SongDto songToDto(Song song) throws SongConverterException {
-        if (Objects.isNull(song)) {
-            throw new SongConverterException();
-        }
-        try {
-            SongDto songDto = mapper.map(song, SongDto.class);
-            songDto.setAuthorNames(getAuthorNamesOfSong(song));
-            songDto.setAlbumName(getAlbumNameOfSong(song));
-            return songDto;
-        } catch (Exception e) {
-            String message = "error occurred during converting from entity to dto";
-            log.error(message, e.getMessage());
-            throw new SongConverterException(message, e);
-        }
-    }
-
-    private Song dtoToSong(SongDto songDto) throws SongConverterException {
-        if (Objects.isNull(songDto)) {
-            throw new SongConverterException();
-        }
-        try {
-            return mapper.map(songDto, Song.class);
-        } catch (Exception e) {
-            String message = "error occurred during converting from dto to entity";
-            log.error(message, e.getMessage());
-            throw new SongConverterException(message, e);
-        }
-    }
-
-    private Song updateSong(Song song, SongDto songDto) throws SongException {
-        if (Objects.isNull(songDto)) {
-            String message = "song dto is null";
-            log.error(message);
-            throw new SongException(message);
-        }
+    private Song updateSong(Song song, SongDto songDto) {
         song.setId(songDto.getId());
         song.setName(songDto.getName());
         song.setDuration(songDto.getDuration());
