@@ -18,14 +18,14 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 public class Album extends AbstractEntity {
 
-    @Column(nullable = false)
+    @Column(name = "album_name", nullable = false)
     private String name;
 
-    @Column(nullable = false, updatable = false)
+    @Column(name = "created_date", nullable = false, updatable = false)
     private LocalDate createdDate;
 
     @OneToMany(mappedBy = "album",
-            cascade = {CascadeType.ALL, CascadeType.MERGE},
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             orphanRemoval = true)
     private List<Song> songs = new ArrayList<>();
 }

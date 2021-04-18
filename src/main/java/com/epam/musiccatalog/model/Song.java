@@ -22,22 +22,19 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 public class Song extends AbstractEntity {
 
-    @Column(nullable = false)
+    @Column(name = "song_name", nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(name = "duration", nullable = false)
     private Duration duration;
 
-    @ManyToMany(mappedBy = "songs", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToMany(mappedBy = "songs", fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Author> authors = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.MERGE,
-                    CascadeType.DETACH,
-                    CascadeType.PERSIST})
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name = "album_id",
-            referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "fk_album_id"))
     private Album album;
 }

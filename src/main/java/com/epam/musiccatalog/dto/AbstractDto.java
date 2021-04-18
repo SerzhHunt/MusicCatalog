@@ -1,17 +1,13 @@
 package com.epam.musiccatalog.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
-@ToString
+@MappedSuperclass
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class AbstractDto implements Serializable {
+public abstract class AbstractDto implements Serializable {
 
     private Long id;
 }

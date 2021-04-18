@@ -23,19 +23,20 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 public class Author extends AbstractEntity {
 
-    @Column(nullable = false)
+    @Column(name = "first_name", nullable = false)
     private String firstname;
 
-    @Column(nullable = false)
+    @Column(name = "last_name", nullable = false)
     private String lastname;
 
-    @Column(nullable = false)
+    @Column(name = "birth_date", nullable = false)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(pattern = "yyyy/MM/dd")
     private LocalDate birthDate;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "song_id", referencedColumnName = "id",
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "author_id", referencedColumnName = "song_id",
             foreignKey = @ForeignKey(name = "fk_song_id"))
     private List<Song> songs = new ArrayList<>();
 }
