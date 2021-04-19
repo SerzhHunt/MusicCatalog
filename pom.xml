@@ -21,7 +21,8 @@
         <spring.version>2.4.4</spring.version>
         <junit-5.version>5.6.2</junit-5.version>
         <orika-mapper.version>1.9.0</orika-mapper.version>
-        <springfox-swagger.version>2.9.2</springfox-swagger.version>
+        <openapi.version>1.5.2</openapi.version>
+        <swagger-annotations.version>2.1.6</swagger-annotations.version>
         <liquibase.version>4.3.3</liquibase.version>
         <javax-validation.version>2.0.1.Final</javax-validation.version>
     </properties>
@@ -62,14 +63,14 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${springfox-swagger.version}</version>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${openapi.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${springfox-swagger.version}</version>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${swagger-annotations.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

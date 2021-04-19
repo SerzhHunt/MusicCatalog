@@ -1,6 +1,5 @@
 package com.epam.musiccatalog.model;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.persistence.MappedSuperclass;
@@ -16,6 +15,5 @@ public abstract class AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
-    @ApiModelProperty(notes = "The database generated ID")
     private Long id;
 }

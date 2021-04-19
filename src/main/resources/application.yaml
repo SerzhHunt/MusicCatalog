@@ -16,6 +16,10 @@ spring:
   liquibase:
     change-log: db/changelog/db.changelog-master.yaml
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui-musiccatalog.html
+
 server:
   port: 8080
 
