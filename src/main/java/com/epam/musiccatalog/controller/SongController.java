@@ -5,9 +5,7 @@ import com.epam.musiccatalog.exception.AlbumNotFoundException;
 import com.epam.musiccatalog.service.impl.SongServiceImpl;
 import com.epam.musiccatalog.transfer.Validation;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -35,9 +33,7 @@ public class SongController {
 
     @Operation(summary = "Find all songs", tags = {"song"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
-                    content = @Content(array = @ArraySchema(schema =
-                    @Schema(implementation = SongDto.class)))),
+            @ApiResponse(responseCode = "200", description = "successful operation"),
             @ApiResponse(responseCode = "500", description = "Server Error")})
     @GetMapping
     public ResponseEntity<List<SongDto>> getAllSongs() {
@@ -46,22 +42,21 @@ public class SongController {
 
     @Operation(summary = "Get a song by id in album by id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found the song",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = SongDto.class))}),
-            @ApiResponse(responseCode = "400", description = "Invalid id supplied", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Song not found", content = @Content),
+            @ApiResponse(responseCode = "200", description = "Found the song"),
+            @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+            @ApiResponse(responseCode = "404", description = "Song not found"),
             @ApiResponse(responseCode = "500", description = "Server Error")})
     @GetMapping("/{albumId}/{songId}")
-    public ResponseEntity<SongDto> getSongById(@PathVariable("albumId") Long albumId,
+    public ResponseEntity<SongDto> getSongById(@Parameter(description = "id of album to be searched")
+                                               @PathVariable("albumId") Long albumId,
+                                               @Parameter(description = "id of song to be searched")
                                                @PathVariable("songId") Long songId) {
         return new ResponseEntity<>(songService.getSongById(albumId, songId), HttpStatus.OK);
     }
 
     @Operation(summary = "Add new song", tags = {"song"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Song created",
-                    content = @Content(schema = @Schema(implementation = SongDto.class))),
+            @ApiResponse(responseCode = "201", description = "Song created"),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "409", description = "Song already exists"),
             @ApiResponse(responseCode = "500", description = "Server Error")})
@@ -92,7 +87,8 @@ public class SongController {
             @ApiResponse(responseCode = "404", description = "Song not found"),
             @ApiResponse(responseCode = "500", description = "Server Error")})
     @DeleteMapping("{songId}")
-    public void deleteSong(@PathVariable("songId") Long id) {
+    public void deleteSong(@Parameter(description = "id of song to be searched")
+                           @PathVariable("songId") Long id) {
         songService.delete(id);
     }
 }

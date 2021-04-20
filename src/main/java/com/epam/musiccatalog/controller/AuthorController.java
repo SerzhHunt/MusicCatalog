@@ -4,9 +4,7 @@ import com.epam.musiccatalog.dto.AuthorDto;
 import com.epam.musiccatalog.service.impl.AuthorServiceImpl;
 import com.epam.musiccatalog.transfer.Validation;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -35,9 +33,7 @@ public class AuthorController {
 
     @Operation(summary = "Find all authors", tags = {"author"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
-                    content = @Content(array = @ArraySchema(schema =
-                    @Schema(implementation = AuthorDto.class)))),
+            @ApiResponse(responseCode = "200", description = "successful operation"),
             @ApiResponse(responseCode = "500", description = "Server Error")})
     @GetMapping
     public ResponseEntity<List<AuthorDto>> getAllAuthors() {
@@ -46,21 +42,19 @@ public class AuthorController {
 
     @Operation(summary = "Get a author by id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found the author",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = AuthorDto.class))}),
-            @ApiResponse(responseCode = "400", description = "Invalid id supplied", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Album not found", content = @Content),
+            @ApiResponse(responseCode = "200", description = "Found the author"),
+            @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+            @ApiResponse(responseCode = "404", description = "Author not found"),
             @ApiResponse(responseCode = "500", description = "Server Error")})
     @GetMapping("{authorId}")
-    public ResponseEntity<AuthorDto> getAuthorById(@PathVariable("authorId") Long authorId) {
+    public ResponseEntity<AuthorDto> getAuthorById(@Parameter(description = "id of author to be searched")
+                                                   @PathVariable("authorId") Long authorId) {
         return new ResponseEntity<>(authorService.getAuthorById(authorId), HttpStatus.OK);
     }
 
     @Operation(summary = "Add new author", tags = {"author"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Author created",
-                    content = @Content(schema = @Schema(implementation = AuthorDto.class))),
+            @ApiResponse(responseCode = "201", description = "Author created"),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "409", description = "Author already exists"),
             @ApiResponse(responseCode = "500", description = "Server Error")})
@@ -90,7 +84,8 @@ public class AuthorController {
             @ApiResponse(responseCode = "404", description = "Author not found"),
             @ApiResponse(responseCode = "500", description = "Server Error")})
     @DeleteMapping("{authorId}")
-    public void deleteAuthor(@PathVariable("authorId") Long id) {
+    public void deleteAuthor(@Parameter(description = "id of author to be searched")
+                             @PathVariable("authorId") Long id) {
         authorService.delete(id);
     }
 }

@@ -5,9 +5,6 @@ import com.epam.musiccatalog.service.impl.AlbumServiceImpl;
 import com.epam.musiccatalog.transfer.Validation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -35,9 +32,7 @@ public class AlbumController {
 
     @Operation(summary = "Find all albums", tags = {"album"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
-                    content = @Content(array = @ArraySchema(schema =
-                    @Schema(implementation = AlbumDto.class)))),
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
             @ApiResponse(responseCode = "500", description = "Server Error")})
     @GetMapping
     public ResponseEntity<List<AlbumDto>> getAllAlbums() {
@@ -46,11 +41,9 @@ public class AlbumController {
 
     @Operation(summary = "Get a album by id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found the album",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = AlbumDto.class))}),
-            @ApiResponse(responseCode = "400", description = "Invalid id supplied", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Album not found", content = @Content),
+            @ApiResponse(responseCode = "200", description = "Found the album"),
+            @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+            @ApiResponse(responseCode = "404", description = "Album not found"),
             @ApiResponse(responseCode = "500", description = "Server Error")})
     @GetMapping("{albumId}")
     public ResponseEntity<AlbumDto> getAlbumById(@Parameter(description = "id of album to be searched")
@@ -60,8 +53,7 @@ public class AlbumController {
 
     @Operation(summary = "Add new album", tags = {"album"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Album created",
-                    content = @Content(schema = @Schema(implementation = AlbumDto.class))),
+            @ApiResponse(responseCode = "201", description = "Album created"),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "409", description = "Album already exists"),
             @ApiResponse(responseCode = "500", description = "Server Error")})
@@ -91,7 +83,8 @@ public class AlbumController {
             @ApiResponse(responseCode = "404", description = "Album not found"),
             @ApiResponse(responseCode = "500", description = "Server Error")})
     @DeleteMapping("{albumId}")
-    public void deleteAlbum(@PathVariable("albumId") Long albumId) {
+    public void deleteAlbum(@Parameter(description = "id of album to be searched")
+                            @PathVariable("albumId") Long albumId) {
         albumService.delete(albumId);
     }
 }
