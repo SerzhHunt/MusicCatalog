@@ -1,0 +1,38 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/music_catalog
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: always
+    username: postgres
+    password: postgres
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: off
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+  liquibase:
+    change-log: db/changelog/db.changelog-master.yaml
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui-musiccatalog.html
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org.springframework.web: error
+    com.epam.musiccatalog: error
+    org.hibernate: error
+    SQL: error
+    typedescriptor.sql.BasicBinder: error
+    liquibase: info
+  file:
+    name: app.log
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+    file: "%d %p %c{1.} [%t] %m%n"
