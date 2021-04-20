@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet id="20210420_3" author="Rakov.Sergey">
+        <comment>Merge song and author</comment>
+        <sqlFile path="classpath:db/changelog/scripts/2021/20210420_3.sql"/>
+    </changeSet>
+</databaseChangeLog>
