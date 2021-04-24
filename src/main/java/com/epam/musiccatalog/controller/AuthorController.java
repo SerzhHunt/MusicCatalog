@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -66,7 +67,7 @@ public class AuthorController {
 
     @Operation(summary = "Update an existing author", tags = {"author"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "200", description = "Author updated"),
             @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
             @ApiResponse(responseCode = "404", description = "Author not found"),
             @ApiResponse(responseCode = "405", description = "Validation exception"),
@@ -75,15 +76,16 @@ public class AuthorController {
     public ResponseEntity<AuthorDto> updateAuthor(@Validated(value = Validation.Exists.class)
                                                   @PathVariable("authorId") Long id,
                                                   @RequestBody AuthorDto changedAuthor) {
-        return new ResponseEntity<>(authorService.update(id, changedAuthor), HttpStatus.CREATED);
+        return new ResponseEntity<>(authorService.update(id, changedAuthor), HttpStatus.OK);
     }
 
     @Operation(summary = "Deletes a author", tags = {"author"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "successful operation"),
+            @ApiResponse(responseCode = "204", description = "Successful operation"),
             @ApiResponse(responseCode = "404", description = "Author not found"),
             @ApiResponse(responseCode = "500", description = "Server Error")})
     @DeleteMapping("{authorId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAuthor(@Parameter(description = "id of author to be searched")
                              @PathVariable("authorId") Long id) {
         authorService.delete(id);

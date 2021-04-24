@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false, exclude = {"songNames"})
 @Schema(name = "AuthorDto", description = "Data object for an author")
 public class AuthorDto extends AbstractDto {
 
@@ -28,6 +28,7 @@ public class AuthorDto extends AbstractDto {
     private String lastname;
 
     @NotNull(groups = {Validation.New.class})
+    @Null(groups = {Validation.Exists.class})
     @Schema(description = "author's date of birth")
     private LocalDate birthDate;
 

@@ -79,10 +79,8 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     private Author updateAuthor(Author author, AuthorDto authorDto) {
-        author.setId(author.getId());
         author.setFirstname(authorDto.getFirstname());
         author.setLastname(author.getLastname());
-        author.setBirthDate(authorDto.getBirthDate());
         return author;
     }
 }
