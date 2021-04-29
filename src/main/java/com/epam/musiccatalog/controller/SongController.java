@@ -33,8 +33,7 @@ public class SongController {
 
     @Operation(summary = "Find all songs", tags = {"song"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "successful operation"),
-            @ApiResponse(responseCode = "500", description = "Server Error")})
+            @ApiResponse(responseCode = "200", description = "successful operation")})
     @GetMapping
     public ResponseEntity<List<SongDto>> getAllSongs() {
         return new ResponseEntity<>(songService.getAll(), HttpStatus.OK);
@@ -44,8 +43,7 @@ public class SongController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the song"),
             @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-            @ApiResponse(responseCode = "404", description = "Song not found"),
-            @ApiResponse(responseCode = "500", description = "Server Error")})
+            @ApiResponse(responseCode = "404", description = "Song not found")})
     @GetMapping("/{albumId}/{songId}")
     public ResponseEntity<SongDto> getSongById(@Parameter(description = "id of album to be searched")
                                                @PathVariable("albumId") Long albumId,

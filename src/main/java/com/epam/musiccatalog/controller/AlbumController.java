@@ -32,8 +32,7 @@ public class AlbumController {
 
     @Operation(summary = "Find all albums", tags = {"album"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful operation"),
-            @ApiResponse(responseCode = "500", description = "Server Error")})
+            @ApiResponse(responseCode = "200", description = "Successful operation")})
     @GetMapping
     public ResponseEntity<List<AlbumDto>> getAllAlbums() {
         return new ResponseEntity<>(albumService.getAll(), HttpStatus.OK);
@@ -43,12 +42,22 @@ public class AlbumController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the album"),
             @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-            @ApiResponse(responseCode = "404", description = "Album not found"),
-            @ApiResponse(responseCode = "500", description = "Server Error")})
+            @ApiResponse(responseCode = "404", description = "Album not found")})
     @GetMapping("{albumId}")
     public ResponseEntity<AlbumDto> getAlbumById(@Parameter(description = "id of album to be searched")
                                                  @PathVariable("albumId") Long id) {
         return new ResponseEntity<>(albumService.getAlbumById(id), HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get a album by name")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the album"),
+            @ApiResponse(responseCode = "400", description = "Invalid name supplied"),
+            @ApiResponse(responseCode = "404", description = "Album not found")})
+    @GetMapping("/name/{albumName}")
+    public ResponseEntity<AlbumDto> getAlbumByName(@Parameter(description = "album name or part of the name")
+                                                   @PathVariable("albumName") String albumName) {
+        return new ResponseEntity<>(albumService.getAlbumByName(albumName), HttpStatus.OK);
     }
 
     @Operation(summary = "Add new album", tags = {"album"})

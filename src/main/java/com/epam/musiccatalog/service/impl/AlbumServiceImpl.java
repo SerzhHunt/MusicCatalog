@@ -42,6 +42,18 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    public AlbumDto getAlbumByName(String albumName) {
+        Optional<Album> album = albumRepository.findAlbumWithPartOfName(albumName);
+
+        if (album.isEmpty()) {
+            String message = String.format("Album: %s not found", albumName);
+            log.error(message);
+            throw new AlbumNotFoundException(message);
+        }
+        return albumToDto(album.get());
+    }
+
+    @Override
     @Transactional
     public AlbumDto save(AlbumDto albumDto) {
         Album savedAlbum = albumRepository.save(mapper.map(albumDto, Album.class));

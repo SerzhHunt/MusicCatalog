@@ -34,8 +34,7 @@ public class AuthorController {
 
     @Operation(summary = "Find all authors", tags = {"author"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "successful operation"),
-            @ApiResponse(responseCode = "500", description = "Server Error")})
+            @ApiResponse(responseCode = "200", description = "successful operation")})
     @GetMapping
     public ResponseEntity<List<AuthorDto>> getAllAuthors() {
         return new ResponseEntity<>(authorService.getAll(), HttpStatus.OK);
@@ -45,8 +44,7 @@ public class AuthorController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the author"),
             @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-            @ApiResponse(responseCode = "404", description = "Author not found"),
-            @ApiResponse(responseCode = "500", description = "Server Error")})
+            @ApiResponse(responseCode = "404", description = "Author not found")})
     @GetMapping("{authorId}")
     public ResponseEntity<AuthorDto> getAuthorById(@Parameter(description = "id of author to be searched")
                                                    @PathVariable("authorId") Long authorId) {

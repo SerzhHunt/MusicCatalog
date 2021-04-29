@@ -1,6 +1,7 @@
 package com.epam.musiccatalog.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -21,6 +22,7 @@ import java.util.List;
 @Table(name = "author")
 @Data
 @EqualsAndHashCode(callSuper = false)
+@AllArgsConstructor
 public class Author extends AbstractEntity {
 
     @Column(name = "first_name", nullable = false)
