@@ -1,10 +1,9 @@
-package com.epam.musiccatalog;
+package com.epam.musiccatalog.integration;
 
 import com.epam.musiccatalog.controller.AuthorController;
 import com.epam.musiccatalog.dto.AuthorDto;
 import com.epam.musiccatalog.service.impl.AuthorServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(AuthorController.class)
-class AuthorRestControllerMvcTest {
+class AuthorRestControllerMvcTests {
     private static final String BASE_URL = "/authors/";
     private static final String BASE_URL_AND_ID = "/authors/{authorId}";
     private static final Long AUTHOR_ID = 1L;
@@ -46,84 +46,96 @@ class AuthorRestControllerMvcTest {
     @MockBean
     private AuthorServiceImpl authorService;
 
-    private AuthorDto authorDto;
-    private AuthorDto updatedAuthorDto;
-    private List<AuthorDto> authorDtoList;
-
-    @BeforeEach
-    public void setUp() {
-        authorDto = new AuthorDto();
-        authorDto.setFirstname("MockFirstname");
-        authorDto.setLastname("MockLastname");
-        authorDto.setBirthDate(LocalDate.of(1970, 1, 1));
-        authorDto.setSongNames(Collections.emptyList());
-
-        updatedAuthorDto = new AuthorDto();
-        updatedAuthorDto.setFirstname("UpdatedMockFirstname");
-        updatedAuthorDto.setLastname("UpdatedMockLastname");
-        updatedAuthorDto.setBirthDate(LocalDate.of(1970, 1, 1));
-        updatedAuthorDto.setSongNames(Arrays.asList("MockSong1", "MockSong2"));
-
-        authorDtoList = Arrays.asList(authorDto, updatedAuthorDto);
-
-        when(authorService.getAll()).thenReturn(authorDtoList);
-        when(authorService.getAuthorById(AUTHOR_ID)).thenReturn(authorDto);
-        when(authorService.save(any(AuthorDto.class))).thenReturn(authorDto);
-        when(authorService.update(anyLong(), any(AuthorDto.class))).thenReturn(updatedAuthorDto);
-    }
-
     @Test
     void shouldReturn200CodeAndAllAuthorsListWhenSuccessfullyReturnsAllAuthors() throws Exception {
+        AuthorDto authorDto = buildAuthorDto(LocalDate.of(1970, 1, 1), Arrays.asList("song1", "song2"));
+        authorDto.setId(AUTHOR_ID);
+
+        List<AuthorDto> authorDtoList = Collections.singletonList(authorDto);
+
+        when(authorService.getAll()).thenReturn(authorDtoList);
+
         this.mvc.perform(get(BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.size()").value(this.authorDtoList.size()))
+                .andExpect(jsonPath("$[0].id").value(AUTHOR_ID))
+                .andExpect(jsonPath("$[0].firstname").value(authorDtoList.get(0).getFirstname()))
+                .andExpect(jsonPath("$[0].lastname").value(authorDtoList.get(0).getLastname()))
+                .andExpect(jsonPath("$[0].birthDate").value(authorDtoList.get(0).getBirthDate().toString()))
+                .andExpect(jsonPath("$[0].songNames[0]").value("song1"))
+                .andExpect(jsonPath("$[0].songNames[1]").value("song2"))
+                .andExpect(jsonPath("$", hasSize(1)))
                 .andReturn();
     }
 
     @Test
     void shouldReturn200CodeAndAuthorWhenSuccessfullyReturnAuthorById() throws Exception {
+        AuthorDto authorDto = buildAuthorDto(LocalDate.of(1970, 1, 1), Arrays.asList("song1", "song2"));
+        authorDto.setId(AUTHOR_ID);
+
+        when(authorService.getAuthorById(anyLong())).thenReturn(authorDto);
+
         this.mvc.perform(get(BASE_URL_AND_ID, AUTHOR_ID)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.firstname").value(this.authorDto.getFirstname()))
-                .andExpect(jsonPath("$.lastname").value(this.authorDto.getLastname()))
-                .andExpect(jsonPath("$.birthDate").value(this.authorDto.getBirthDate().toString()))
+                .andExpect(jsonPath("$.id").value(authorDto.getId()))
+                .andExpect(jsonPath("$.firstname").value(authorDto.getFirstname()))
+                .andExpect(jsonPath("$.lastname").value(authorDto.getLastname()))
+                .andExpect(jsonPath("$.birthDate").value(authorDto.getBirthDate().toString()))
+                .andExpect(jsonPath("$.songNames[0]").value("song1"))
+                .andExpect(jsonPath("$.songNames[1]").value("song2"))
                 .andReturn();
     }
 
     @Test
     void shouldReturn201CodeAndAuthorWhenSuccessfullySaveNewAuthor() throws Exception {
+        AuthorDto authorDto = buildAuthorDto(LocalDate.of(1970, 1, 1), null);
+        when(authorService.save(any(AuthorDto.class))).thenReturn(authorDto);
+
         this.mvc.perform(post(BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(authorDto))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.firstname").value(this.authorDto.getFirstname()))
-                .andExpect(jsonPath("$.lastname").value(this.authorDto.getLastname()))
-                .andExpect(jsonPath("$.birthDate").value(this.authorDto.getBirthDate().toString()));
+                .andExpect(jsonPath("$.firstname").value(authorDto.getFirstname()))
+                .andExpect(jsonPath("$.lastname").value(authorDto.getLastname()))
+                .andExpect(jsonPath("$.birthDate").value(authorDto.getBirthDate().toString()));
     }
 
     @Test
     void shouldReturn201CodeAndUpdatedAuthorWhenSuccessfullyAuthorHasBeenUpdated() throws Exception {
+        AuthorDto updateAuthorDto = buildAuthorDto(null, null);
+        updateAuthorDto.setId(AUTHOR_ID);
+        when(authorService.update(anyLong(), any(AuthorDto.class))).thenReturn(updateAuthorDto);
+
         this.mvc.perform(put(BASE_URL_AND_ID, AUTHOR_ID)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(updatedAuthorDto))
+                .content(objectMapper.writeValueAsString(updateAuthorDto))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.firstname").value(this.updatedAuthorDto.getFirstname()))
-                .andExpect(jsonPath("$.lastname").value(this.updatedAuthorDto.getLastname()))
-                .andExpect(jsonPath("$.songNames.size()").value(updatedAuthorDto.getSongNames().size()))
+                .andExpect(jsonPath("$.id").value(updateAuthorDto.getId()))
+                .andExpect(jsonPath("$.firstname").value(updateAuthorDto.getFirstname()))
+                .andExpect(jsonPath("$.lastname").value(updateAuthorDto.getLastname()))
                 .andReturn();
     }
 
     @Test
     void shouldReturn204CodeWhenSuccessfullyAuthorHasBeenDeleted() throws Exception {
         mvc.perform(delete(BASE_URL_AND_ID, AUTHOR_ID))
-                .andExpect(status().isNoContent());
+                .andExpect(status().isNoContent())
+                .andReturn();
+    }
+
+    private AuthorDto buildAuthorDto(LocalDate birthDate, List<String> songNames) {
+        return AuthorDto.builder()
+                .firstname("test")
+                .lastname("test")
+                .birthDate(birthDate)
+                .songNames(songNames)
+                .build();
     }
 }

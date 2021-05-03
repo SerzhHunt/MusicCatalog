@@ -1,6 +1,6 @@
 package com.epam.musiccatalog.dto;
 
-import com.epam.musiccatalog.transfer.Validation;
+import com.epam.musiccatalog.valid.Validation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,21 +17,21 @@ import java.util.Set;
 @Schema(name = "SongDto", description = "Data object for an song")
 public class SongDto extends AbstractDto {
 
-    @NotNull(groups = {Validation.New.class})
-    @Null(groups = {Validation.Exists.class})
+    @NotNull(groups = {Validation.OnCreate.class})
+    @Null(groups = {Validation.OnUpdate.class})
     @Size(min = 1, max = 255)
     @Schema(description = "Song name")
     private String name;
 
-    @NotNull(groups = {Validation.New.class})
+    @NotNull(groups = {Validation.OnCreate.class})
     @Schema(description = "Song duration", example = "3:45")
     private Duration duration;
 
-    @NotNull(groups = {Validation.New.class})
+    @NotNull(groups = {Validation.OnCreate.class})
     @Schema(description = "songwriter list", example = "author one, author two")
     private Set<String> authorNames = new HashSet<>();
 
-    @NotNull(groups = {Validation.New.class})
+    @NotNull(groups = {Validation.OnCreate.class})
     @Schema(name = "Song album")
     private String albumName;
 }

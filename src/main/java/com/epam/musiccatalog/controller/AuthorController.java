@@ -2,7 +2,7 @@ package com.epam.musiccatalog.controller;
 
 import com.epam.musiccatalog.dto.AuthorDto;
 import com.epam.musiccatalog.service.impl.AuthorServiceImpl;
-import com.epam.musiccatalog.transfer.Validation;
+import com.epam.musiccatalog.valid.Validation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -58,7 +58,7 @@ public class AuthorController {
             @ApiResponse(responseCode = "409", description = "Author already exists"),
             @ApiResponse(responseCode = "500", description = "Server Error")})
     @PostMapping
-    public ResponseEntity<AuthorDto> saveAuthor(@Validated(value = Validation.New.class)
+    public ResponseEntity<AuthorDto> saveAuthor(@Validated(value = Validation.OnCreate.class)
                                                 @RequestBody AuthorDto author) {
         return new ResponseEntity<>(authorService.save(author), HttpStatus.CREATED);
     }
@@ -66,13 +66,12 @@ public class AuthorController {
     @Operation(summary = "Update an existing author", tags = {"author"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Author updated"),
-            @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "404", description = "Author not found"),
-            @ApiResponse(responseCode = "405", description = "Validation exception"),
             @ApiResponse(responseCode = "500", description = "Server Error")})
     @PutMapping("{authorId}")
-    public ResponseEntity<AuthorDto> updateAuthor(@Validated(value = Validation.Exists.class)
-                                                  @PathVariable("authorId") Long id,
+    public ResponseEntity<AuthorDto> updateAuthor(@PathVariable("authorId") Long id,
+                                                  @Validated(value = Validation.OnUpdate.class)
                                                   @RequestBody AuthorDto changedAuthor) {
         return new ResponseEntity<>(authorService.update(id, changedAuthor), HttpStatus.OK);
     }

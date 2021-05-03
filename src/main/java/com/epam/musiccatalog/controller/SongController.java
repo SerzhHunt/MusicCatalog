@@ -3,7 +3,7 @@ package com.epam.musiccatalog.controller;
 import com.epam.musiccatalog.dto.SongDto;
 import com.epam.musiccatalog.exception.AlbumNotFoundException;
 import com.epam.musiccatalog.service.impl.SongServiceImpl;
-import com.epam.musiccatalog.transfer.Validation;
+import com.epam.musiccatalog.valid.Validation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -59,7 +59,7 @@ public class SongController {
             @ApiResponse(responseCode = "409", description = "Song already exists"),
             @ApiResponse(responseCode = "500", description = "Server Error")})
     @PostMapping("{/albumId}")
-    public ResponseEntity<SongDto> saveSong(@Validated(value = Validation.New.class)
+    public ResponseEntity<SongDto> saveSong(@Validated(value = Validation.OnCreate.class)
                                             @PathVariable("albumId") Long albumId,
                                             @RequestBody SongDto songDto) throws AlbumNotFoundException {
         return new ResponseEntity<>(songService.save(albumId, songDto), HttpStatus.CREATED);
@@ -73,7 +73,7 @@ public class SongController {
             @ApiResponse(responseCode = "405", description = "Validation exception"),
             @ApiResponse(responseCode = "500", description = "Server Error")})
     @PutMapping("{/songId}")
-    public ResponseEntity<SongDto> updateSong(@Validated(value = Validation.Exists.class)
+    public ResponseEntity<SongDto> updateSong(@Validated(value = Validation.OnUpdate.class)
                                               @PathVariable("songId") Long id,
                                               @RequestBody SongDto songDto) {
         return new ResponseEntity<>(songService.update(id, songDto), HttpStatus.CREATED);
@@ -81,7 +81,7 @@ public class SongController {
 
     @Operation(summary = "Deletes a song", tags = {"song"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "204", description = "Successful operation"),
             @ApiResponse(responseCode = "404", description = "Song not found"),
             @ApiResponse(responseCode = "500", description = "Server Error")})
     @DeleteMapping("{songId}")

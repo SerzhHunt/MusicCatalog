@@ -2,8 +2,10 @@ package com.epam.musiccatalog.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.CascadeType;
@@ -18,11 +20,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
+@Builder
 @Entity(name = "Author")
 @Table(name = "author")
-@Data
-@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class Author extends AbstractEntity {
 
     @Column(name = "first_name", nullable = false)
