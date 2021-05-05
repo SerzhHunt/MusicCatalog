@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,8 @@ public class AlbumDto extends AbstractDto {
     @Size(min = 1, max = 255)
     @Schema(description = "Album name")
     private String name;
+
+    private LocalDate createdDate;
 
     @Null(groups = {Validation.OnCreate.class,Validation.OnUpdate.class})
     @Schema(description = "Album duration", example = "58:17")

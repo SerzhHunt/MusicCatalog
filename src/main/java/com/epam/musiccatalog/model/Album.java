@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDate;
@@ -30,8 +31,7 @@ public class Album extends AbstractEntity {
     @Column(name = "created_date", nullable = false, updatable = false)
     private LocalDate createdDate;
 
-    @OneToMany(mappedBy = "album",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            orphanRemoval = true)
+    @OneToMany(mappedBy = "album", fetch = FetchType.EAGER,
+            cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<Song> songs = new ArrayList<>();
 }

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
-public class CustomGlobalExceptionHandler {
+public class GeneralExceptionHandler {
 
     @ExceptionHandler({AuthorNotFoundException.class, AlbumNotFoundException.class, SongNotFoundException.class})
     public ResponseEntity<ErrorResponse> handleNotFound(RuntimeException ex) {

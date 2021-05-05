@@ -45,7 +45,7 @@ public class AlbumController {
             @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
             @ApiResponse(responseCode = "404", description = "Album not found")})
     @GetMapping("{albumId}")
-    public ResponseEntity<AlbumDto> getAlbumById(@Parameter(description = "id of album to be searched")
+    public ResponseEntity<AlbumDto> getAlbumById(@Parameter(description = "Id of album to be searched")
                                                  @PathVariable("albumId") Long id) {
         return new ResponseEntity<>(albumService.getAlbumById(id), HttpStatus.OK);
     }
@@ -56,7 +56,7 @@ public class AlbumController {
             @ApiResponse(responseCode = "400", description = "Invalid name supplied"),
             @ApiResponse(responseCode = "404", description = "Album not found")})
     @GetMapping("/name/{albumName}")
-    public ResponseEntity<AlbumDto> getAlbumByName(@Parameter(description = "album name or part of the name")
+    public ResponseEntity<AlbumDto> getAlbumByName(@Parameter(description = "Album name or part of the name")
                                                    @PathVariable("albumName") String albumName) {
         return new ResponseEntity<>(albumService.getAlbumByName(albumName), HttpStatus.OK);
     }
@@ -68,7 +68,8 @@ public class AlbumController {
             @ApiResponse(responseCode = "409", description = "Album already exists"),
             @ApiResponse(responseCode = "500", description = "Server Error")})
     @PostMapping
-    public ResponseEntity<AlbumDto> saveAlbum(@Validated(value = Validation.OnCreate.class)
+    public ResponseEntity<AlbumDto> saveAlbum(@Parameter(description = "Save album")
+                                              @Validated(value = Validation.OnCreate.class)
                                               @RequestBody AlbumDto albumDto) {
         return new ResponseEntity<>(albumService.save(albumDto), HttpStatus.CREATED);
     }
@@ -76,12 +77,13 @@ public class AlbumController {
     @Operation(summary = "Update an existing album", tags = {"album"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation"),
-            @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
+            @ApiResponse(responseCode = "400", description = "Validation exception"),
             @ApiResponse(responseCode = "404", description = "Album not found"),
-            @ApiResponse(responseCode = "405", description = "Validation exception"),
             @ApiResponse(responseCode = "500", description = "Server Error")})
     @PutMapping("{albumId}")
-    public ResponseEntity<AlbumDto> updateAlbum(@PathVariable("albumId") Long id,
+    public ResponseEntity<AlbumDto> updateAlbum(@Parameter(description = "Id of album to be searched")
+                                                @PathVariable("albumId") Long id,
+                                                @Parameter(description = "Updated album")
                                                 @Validated(value = Validation.OnUpdate.class)
                                                 @RequestBody AlbumDto albumDto) {
         return new ResponseEntity<>(albumService.update(id, albumDto), HttpStatus.CREATED);
@@ -94,7 +96,7 @@ public class AlbumController {
             @ApiResponse(responseCode = "500", description = "Server Error")})
     @DeleteMapping("{albumId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteAlbum(@Parameter(description = "id of album to be searched")
+    public void deleteAlbum(@Parameter(description = "Id of album to be searched")
                             @PathVariable("albumId") Long albumId) {
         albumService.delete(albumId);
     }

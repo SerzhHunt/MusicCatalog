@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -32,12 +33,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(AlbumController.class)
 class AlbumRestControllerErrorTests {
+    private static final Long ALBUM_ID = 1L;
+    private static final Long EXCEPTION_ID = 999999L;
+    private static final String EXCEPTION_ALBUM_NAME = "tEsT";
+
     private static final String BASE_URL = "/albums/";
     private static final String BASE_URL_AND_ID = "/albums/{albumId}";
     private static final String BASE_URL_AND_SEARCH_BY_NAME = "/albums/name/{albumName}";
-    private static final Long ALBUM_ID = 1L;
-    private static final Long EXCEPTION_ID = 999999L;
-    private static final String INCORRECT_ALBUM_NAME = "tEsT";
 
     @Autowired
     private MockMvc mvc;
@@ -50,7 +52,7 @@ class AlbumRestControllerErrorTests {
 
     @Test
     void whenAlbumByIdNotFoundThenReturn404Code() throws Exception {
-        when(albumService.getAlbumById(EXCEPTION_ID)).thenThrow(new AlbumNotFoundException(EXCEPTION_ID));
+        when(albumService.getAlbumById(anyLong())).thenThrow(new AlbumNotFoundException(EXCEPTION_ID));
 
         mvc.perform(get(BASE_URL_AND_ID, EXCEPTION_ID)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -63,16 +65,48 @@ class AlbumRestControllerErrorTests {
 
     @Test
     void whenAlbumByNameNotFoundThenReturn404Code() throws Exception {
-        String errorMsg = String.format("Album: %s not found", INCORRECT_ALBUM_NAME);
 
-        when(albumService.getAlbumByName(INCORRECT_ALBUM_NAME)).thenThrow(new AlbumNotFoundException(errorMsg));
+        when(albumService.getAlbumByName(anyString())).thenThrow(new AlbumNotFoundException(EXCEPTION_ALBUM_NAME));
 
-        mvc.perform(get(BASE_URL_AND_SEARCH_BY_NAME, INCORRECT_ALBUM_NAME)
+        mvc.perform(get(BASE_URL_AND_SEARCH_BY_NAME, EXCEPTION_ALBUM_NAME)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof AlbumNotFoundException))
-                .andExpect(result -> assertEquals(errorMsg,
+                .andExpect(result -> assertEquals(String.format("Album with name is \"%s\" not found!", EXCEPTION_ALBUM_NAME),
                         Objects.requireNonNull(result.getResolvedException()).getMessage()))
+                .andReturn();
+    }
+
+    @Test
+    void whenSaveAlbumWithoutNameThenReturn400Code() throws Exception {
+        AlbumDto invalidAuthorDto = buildAlbumDto(null, null, null);
+
+        mvc.perform(post(BASE_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(invalidAuthorDto)))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+    }
+
+    @Test
+    void whenSaveAlbumWithDurationThenReturn400Code() throws Exception {
+        AlbumDto invalidAuthorDto = buildAlbumDto("test", Duration.ofMinutes(55), null);
+
+        mvc.perform(post(BASE_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(invalidAuthorDto)))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+    }
+
+    @Test
+    void whenSaveAlbumWithSongNamesThenReturn400Code() throws Exception {
+        AlbumDto invalidAuthorDto = buildAlbumDto("test", null, Arrays.asList("song1", "song2"));
+
+        mvc.perform(post(BASE_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(invalidAuthorDto)))
+                .andExpect(status().isBadRequest())
                 .andReturn();
     }
 
@@ -90,39 +124,6 @@ class AlbumRestControllerErrorTests {
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof AlbumNotFoundException))
                 .andExpect(result -> assertEquals(String.format("Album id not found : %s", ALBUM_ID),
                         Objects.requireNonNull(result.getResolvedException()).getMessage()))
-                .andReturn();
-    }
-
-    @Test
-    void whenSaveAlbumWithNameNotValidThenReturn400Code() throws Exception {
-        AlbumDto invalidAuthorDto = buildAlbumDto(null, null, null);
-
-        mvc.perform(post(BASE_URL)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(invalidAuthorDto)))
-                .andExpect(status().isBadRequest())
-                .andReturn();
-    }
-
-    @Test
-    void whenSaveAlbumWithDurationNotValidThenReturn400Code() throws Exception {
-        AlbumDto invalidAuthorDto = buildAlbumDto("test", Duration.ofMinutes(55), null);
-
-        mvc.perform(post(BASE_URL)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(invalidAuthorDto)))
-                .andExpect(status().isBadRequest())
-                .andReturn();
-    }
-
-    @Test
-    void whenSaveAlbumWithSongNamesNotValidThenReturn400Code() throws Exception {
-        AlbumDto invalidAuthorDto = buildAlbumDto("test", null, Arrays.asList("song1", "song2"));
-
-        mvc.perform(post(BASE_URL)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(invalidAuthorDto)))
-                .andExpect(status().isBadRequest())
                 .andReturn();
     }
 

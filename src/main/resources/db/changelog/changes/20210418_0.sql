@@ -23,8 +23,8 @@ CREATE TABLE IF NOT EXISTS song
 
 CREATE TABLE IF NOT EXISTS author_songs
 (
-    authors_id BIGINT NOT NULL,
-    songs_id   BIGINT NOT NULL,
-    FOREIGN KEY (authors_id) REFERENCES author (id),
-    FOREIGN KEY (songs_id) REFERENCES song (id)
+    author_id BIGINT NOT NULL,
+    song_id   BIGINT NOT NULL,
+    FOREIGN KEY (author_id) REFERENCES author (id),
+    FOREIGN KEY (song_id) REFERENCES song (id)
 );

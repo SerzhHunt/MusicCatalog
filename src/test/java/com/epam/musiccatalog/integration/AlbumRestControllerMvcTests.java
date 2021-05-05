@@ -34,11 +34,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(AlbumController.class)
 class AlbumRestControllerMvcTests {
-    private static final String BASE_URL = "/albums/";
-    private static final String BASE_URL_AND_SEARCH_BY_NAME = "/albums/name/{albumName}";
-    private static final String BASE_URL_AND_ID = "/albums/{albumId}";
     private static final Long ALBUM_ID = 1L;
     private static final String ALBUM_NAME = "tEs";
+
+    private static final String BASE_URL = "/albums/";
+    private static final String BASE_URL_AND_ID = "/albums/{albumId}";
+    private static final String BASE_URL_AND_SEARCH_BY_NAME = "/albums/name/{albumName}";
 
     @Autowired
     private MockMvc mvc;

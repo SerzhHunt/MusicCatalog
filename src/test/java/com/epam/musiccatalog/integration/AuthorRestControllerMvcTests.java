@@ -33,9 +33,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(AuthorController.class)
 class AuthorRestControllerMvcTests {
+    private static final Long AUTHOR_ID = 1L;
+
     private static final String BASE_URL = "/authors/";
     private static final String BASE_URL_AND_ID = "/authors/{authorId}";
-    private static final Long AUTHOR_ID = 1L;
 
     @Autowired
     private MockMvc mvc;
@@ -47,7 +48,7 @@ class AuthorRestControllerMvcTests {
     private AuthorServiceImpl authorService;
 
     @Test
-    void shouldReturn200CodeAndAllAuthorsListWhenSuccessfullyReturnsAllAuthors() throws Exception {
+    void shouldReturn200CodeAndAllAuthorListWhenSuccessfullyReturnsAllAuthors() throws Exception {
         AuthorDto authorDto = buildAuthorDto(LocalDate.of(1970, 1, 1), Arrays.asList("song1", "song2"));
         authorDto.setId(AUTHOR_ID);
 

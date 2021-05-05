@@ -43,10 +43,10 @@ public class AuthorController {
     @Operation(summary = "Get a author by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the author"),
-            @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+            @ApiResponse(responseCode = "400", description = "Validation exception"),
             @ApiResponse(responseCode = "404", description = "Author not found")})
     @GetMapping("{authorId}")
-    public ResponseEntity<AuthorDto> getAuthorById(@Parameter(description = "id of author to be searched")
+    public ResponseEntity<AuthorDto> getAuthorById(@Parameter(description = "Id of author to be searched")
                                                    @PathVariable("authorId") Long authorId) {
         return new ResponseEntity<>(authorService.getAuthorById(authorId), HttpStatus.OK);
     }
@@ -54,7 +54,7 @@ public class AuthorController {
     @Operation(summary = "Add new author", tags = {"author"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Author created"),
-            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "400", description = "Validation exception"),
             @ApiResponse(responseCode = "409", description = "Author already exists"),
             @ApiResponse(responseCode = "500", description = "Server Error")})
     @PostMapping
@@ -66,11 +66,13 @@ public class AuthorController {
     @Operation(summary = "Update an existing author", tags = {"author"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Author updated"),
-            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "400", description = "Validation exception"),
             @ApiResponse(responseCode = "404", description = "Author not found"),
             @ApiResponse(responseCode = "500", description = "Server Error")})
     @PutMapping("{authorId}")
-    public ResponseEntity<AuthorDto> updateAuthor(@PathVariable("authorId") Long id,
+    public ResponseEntity<AuthorDto> updateAuthor(@Parameter(description = "Id of author to be searched")
+                                                  @PathVariable("authorId") Long id,
+                                                  @Parameter(description = "Updated author")
                                                   @Validated(value = Validation.OnUpdate.class)
                                                   @RequestBody AuthorDto changedAuthor) {
         return new ResponseEntity<>(authorService.update(id, changedAuthor), HttpStatus.OK);
@@ -83,7 +85,7 @@ public class AuthorController {
             @ApiResponse(responseCode = "500", description = "Server Error")})
     @DeleteMapping("{authorId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteAuthor(@Parameter(description = "id of author to be searched")
+    public void deleteAuthor(@Parameter(description = "Id of author to be searched")
                              @PathVariable("authorId") Long id) {
         authorService.delete(id);
     }

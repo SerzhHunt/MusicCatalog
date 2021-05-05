@@ -5,7 +5,7 @@ public class AlbumNotFoundException extends RuntimeException {
         super(String.format("Album id not found : %s", id));
     }
 
-    public AlbumNotFoundException(String message) {
-        super(message);
+    public AlbumNotFoundException(String albumName) {
+        super(String.format("Album with name is \"%s\" not found!", albumName));
     }
 }

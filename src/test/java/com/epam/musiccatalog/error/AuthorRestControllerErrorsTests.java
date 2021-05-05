@@ -30,9 +30,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(AuthorController.class)
 class AuthorRestControllerErrorsTests {
-    private static final String BASE_URL = "/authors/";
     private static final Long AUTHOR_ID = 1L;
     private static final Long EXCEPTION_ID = 999999L;
+
+    private static final String BASE_URL = "/authors";
     private static final String BASE_URL_AND_ID = "/authors/{authorId}";
 
     @Autowired
@@ -46,7 +47,7 @@ class AuthorRestControllerErrorsTests {
 
     @Test
     void whenAuthorByIdNotFoundThenReturn404Code() throws Exception {
-        when(authorService.getAuthorById(EXCEPTION_ID)).thenThrow(new AuthorNotFoundException(EXCEPTION_ID));
+        when(authorService.getAuthorById(anyLong())).thenThrow(new AuthorNotFoundException(EXCEPTION_ID));
 
         mvc.perform(get(BASE_URL_AND_ID, EXCEPTION_ID)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -58,24 +59,7 @@ class AuthorRestControllerErrorsTests {
     }
 
     @Test
-    void whenUpdateAuthorByIdNotFoundThenReturn404Code() throws Exception {
-        when(authorService.update(anyLong(), any(AuthorDto.class))).thenThrow(new AuthorNotFoundException(AUTHOR_ID));
-
-        AuthorDto authorDto = buildAuthorDto("test", "test", null);
-        authorDto.setId(AUTHOR_ID);
-
-        mvc.perform(put(BASE_URL_AND_ID, AUTHOR_ID)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(authorDto)))
-                .andExpect(status().isNotFound())
-                .andExpect(result -> assertTrue(result.getResolvedException() instanceof AuthorNotFoundException))
-                .andExpect(result -> assertEquals(String.format("Author id not found : %s", AUTHOR_ID),
-                        Objects.requireNonNull(result.getResolvedException()).getMessage()))
-                .andReturn();
-    }
-
-    @Test
-    void whenSaveAuthorWithFirstNameNotValidThenReturn400Code() throws Exception {
+    void whenSaveAuthorWithoutFirstNameNotValidThenReturn400Code() throws Exception {
         AuthorDto invalidAuthorDto = buildAuthorDto(null, "test", LocalDate.of(1970, 1, 1));
 
         mvc.perform(post(BASE_URL)
@@ -86,7 +70,7 @@ class AuthorRestControllerErrorsTests {
     }
 
     @Test
-    void whenSaveAuthorWithLastNameNotValidThenReturn400Code() throws Exception {
+    void whenSaveAuthorWithoutLastNameThenReturn400Code() throws Exception {
         AuthorDto invalidAuthorDto = buildAuthorDto("test", null, LocalDate.of(1970, 1, 1));
 
         mvc.perform(post(BASE_URL)
@@ -105,6 +89,23 @@ class AuthorRestControllerErrorsTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(invalidAuthorDto)))
                 .andExpect(status().isBadRequest())
+                .andReturn();
+    }
+
+    @Test
+    void whenUpdateAuthorByIdNotFoundThenReturn404Code() throws Exception {
+        when(authorService.update(anyLong(), any(AuthorDto.class))).thenThrow(new AuthorNotFoundException(AUTHOR_ID));
+
+        AuthorDto authorDto = buildAuthorDto("test", "test", null);
+        authorDto.setId(AUTHOR_ID);
+
+        mvc.perform(put(BASE_URL_AND_ID, AUTHOR_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(authorDto)))
+                .andExpect(status().isNotFound())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof AuthorNotFoundException))
+                .andExpect(result -> assertEquals(String.format("Author id not found : %s", AUTHOR_ID),
+                        Objects.requireNonNull(result.getResolvedException()).getMessage()))
                 .andReturn();
     }
 

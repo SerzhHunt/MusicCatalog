@@ -21,16 +21,17 @@ class AlbumRepositoryTests {
 
     @Test
     void whenFindByPartNameThenReturnAlbum() {
-        repository.save(buildAlbum());
-        Album albumByName = repository.findAlbumWithPartOfName("TeS").orElse(new Album());
-        assertEquals(ALBUM_ID, albumByName.getId());
-        assertEquals("test", albumByName.getName());
+        Album savedAlbum = repository.save(buildAlbum());
 
+        Album albumByName = repository.findAlbumWithPartOfName("TeS").orElse(new Album());
+
+        assertEquals(ALBUM_ID, albumByName.getId());
+        assertEquals(savedAlbum.getName(), albumByName.getName());
     }
 
     private Album buildAlbum() {
         return Album.builder()
-                .name("test")
+                .name("AlbumTest")
                 .createdDate(LocalDate.now())
                 .build();
     }

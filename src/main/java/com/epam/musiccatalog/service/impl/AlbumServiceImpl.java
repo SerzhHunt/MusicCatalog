@@ -56,8 +56,8 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     @Transactional
     public AlbumDto save(AlbumDto albumDto) {
+        albumDto.setCreatedDate(LocalDate.now());
         Album savedAlbum = albumRepository.save(mapper.map(albumDto, Album.class));
-        savedAlbum.setCreatedDate(LocalDate.now());
         return mapper.map(savedAlbum, AlbumDto.class);
     }
 
