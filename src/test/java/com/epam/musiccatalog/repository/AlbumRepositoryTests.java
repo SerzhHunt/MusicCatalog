@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 class AlbumRepositoryTests {
-    private static final Long ALBUM_ID = 1L;
+    private static final Long ALBUM_ID = 2L;
 
     @Autowired
     private AlbumRepository repository;
@@ -25,7 +25,7 @@ class AlbumRepositoryTests {
 
         Album albumByName = repository.findAlbumWithPartOfName("TeS").orElse(new Album());
 
-//        assertEquals(ALBUM_ID, albumByName.getId());
+        assertEquals(ALBUM_ID, albumByName.getId());
         assertEquals(savedAlbum.getName(), albumByName.getName());
     }
 

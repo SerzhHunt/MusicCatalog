@@ -5,7 +5,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     initialization-mode: always
     username: postgres
-    password: wgvo27
+    password: postgres
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
@@ -22,7 +22,7 @@ springdoc:
     path: /swagger-ui-musiccatalog.html
 
 server:
-  port: 8081
+  port: 8080
 
 logging:
   level:

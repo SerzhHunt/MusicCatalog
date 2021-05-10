@@ -13,8 +13,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -25,17 +23,10 @@ import java.util.Objects;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(AlbumController.class)
@@ -141,18 +132,14 @@ class AlbumRestControllerMvcTests {
 
         when(albumService.update(anyLong(), any(AlbumDto.class))).thenReturn(updateAlbumDto);
 
-        getMvcResult(put(BASE_URL_AND_ID, ALBUM_ID), updateAlbumDto);
-    }
-
-    private MvcResult getMvcResult(MockHttpServletRequestBuilder method, AlbumDto albumDto) throws Exception {
-        return this.mvc.perform(method
+        this.mvc.perform(put(BASE_URL_AND_ID, ALBUM_ID)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(albumDto))
+                .content(objectMapper.writeValueAsString(updateAlbumDto))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").value(albumDto.getId()))
-                .andExpect(jsonPath("$.name").value(albumDto.getName()))
+                .andExpect(jsonPath("$.id").value(updateAlbumDto.getId()))
+                .andExpect(jsonPath("$.name").value(updateAlbumDto.getName()))
                 .andReturn();
     }
 

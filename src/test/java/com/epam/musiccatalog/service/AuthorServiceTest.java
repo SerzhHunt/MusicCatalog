@@ -1,12 +1,11 @@
 package com.epam.musiccatalog.service;
 
 import com.epam.musiccatalog.dto.AuthorDto;
-import com.epam.musiccatalog.dto.SongDto;
-import com.epam.musiccatalog.mapper.AuthorMapper;
 import com.epam.musiccatalog.model.Author;
 import com.epam.musiccatalog.model.Song;
 import com.epam.musiccatalog.repository.AuthorRepository;
 import com.epam.musiccatalog.service.impl.AuthorServiceImpl;
+import ma.glasnost.orika.MapperFacade;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,14 +13,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
@@ -34,7 +32,7 @@ class AuthorServiceTest {
     private AuthorRepository repository;
 
     @Mock
-    private AuthorMapper mapper;
+    private MapperFacade mapper;
 
     @InjectMocks
     private AuthorServiceImpl service;
@@ -57,7 +55,7 @@ class AuthorServiceTest {
         List<Author> authorList = Collections.singletonList(author);
 
         when(repository.findAll()).thenReturn(authorList);
-        when(mapper.toAuthorDto(any(Author.class))).thenReturn(authorDto);
+        when(mapper.map(author, AuthorDto.class)).thenReturn(authorDto);
 
         List<AuthorDto> authorDtoList = service.getAll();
 
@@ -67,7 +65,7 @@ class AuthorServiceTest {
     @Test
     void getAuthorById() {
         when(repository.findById(anyLong())).thenReturn(Optional.of(author));
-        when(mapper.toAuthorDto(any(Author.class))).thenReturn(authorDto);
+        when(mapper.map(author, AuthorDto.class)).thenReturn(authorDto);
 
         AuthorDto authorById = service.getAuthorById(AUTHOR_ID);
 
@@ -77,23 +75,23 @@ class AuthorServiceTest {
     @Test
     void save() {
         when(repository.save(any(Author.class))).thenReturn(author);
-        when(mapper.toAuthor(any(AuthorDto.class))).thenReturn(author);
-        when(mapper.toAuthorDto(any(Author.class))).thenReturn(authorDto);
+        when(mapper.map(authorDto, Author.class)).thenReturn(author);
+        when(mapper.map(author, AuthorDto.class)).thenReturn(authorDto);
 
         AuthorDto savedAuthorDto = service.save(authorDto);
 
-        check(author,savedAuthorDto);
+        check(author, savedAuthorDto);
     }
 
     @Test
     void update() {
         when(repository.findById(AUTHOR_ID)).thenReturn(Optional.of(author));
         when(repository.save(any(Author.class))).thenReturn(author);
-        when(mapper.toAuthorDto(any(Author.class))).thenReturn(authorDto);
+        when(mapper.map(author, AuthorDto.class)).thenReturn(authorDto);
 
         AuthorDto updateAuthorDto = service.update(AUTHOR_ID, authorDto);
 
-        check(author,updateAuthorDto);
+        check(author, updateAuthorDto);
     }
 
     private void check(Author author, AuthorDto authorDto) {
@@ -107,7 +105,7 @@ class AuthorServiceTest {
         return Author.builder()
                 .firstname("firstName")
                 .lastname("lastName")
-                .songs(null)
+                .songs(Collections.singletonList(new Song()))
                 .birthDate(LocalDate.of(1970, 1, 1))
                 .build();
     }

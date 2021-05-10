@@ -1,10 +1,11 @@
 package com.epam.musiccatalog.service;
 
 import com.epam.musiccatalog.dto.AlbumDto;
-import com.epam.musiccatalog.mapper.AlbumMapper;
 import com.epam.musiccatalog.model.Album;
+import com.epam.musiccatalog.model.Song;
 import com.epam.musiccatalog.repository.AlbumRepository;
 import com.epam.musiccatalog.service.impl.AlbumServiceImpl;
+import ma.glasnost.orika.MapperFacade;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,7 +31,7 @@ class AlbumServiceTest {
     private AlbumRepository repository;
 
     @Mock
-    private AlbumMapper mapper;
+    private MapperFacade mapper;
 
     @InjectMocks
     private AlbumServiceImpl service;
@@ -53,7 +54,8 @@ class AlbumServiceTest {
         List<Album> albumList = Collections.singletonList(album);
 
         when(repository.findAll()).thenReturn(albumList);
-        when(mapper.toAlbumDto(any(Album.class))).thenReturn(albumDto);
+
+        when(mapper.map(album, AlbumDto.class)).thenReturn(albumDto);
 
         List<AlbumDto> albumDtoList = service.getAll();
 
@@ -63,7 +65,7 @@ class AlbumServiceTest {
     @Test
     void getAlbumById() {
         when(repository.findById(anyLong())).thenReturn(Optional.of(album));
-        when(mapper.toAlbumDto(any(Album.class))).thenReturn(albumDto);
+        when(mapper.map(album, AlbumDto.class)).thenReturn(albumDto);
 
         AlbumDto albumById = service.getAlbumById(ALBUM_ID);
 
@@ -73,7 +75,7 @@ class AlbumServiceTest {
     @Test
     void getAlbumByName() {
         when(repository.findAlbumWithPartOfName(anyString())).thenReturn(Optional.of(album));
-        when(mapper.toAlbumDto(any(Album.class))).thenReturn(albumDto);
+        when(mapper.map(album, AlbumDto.class)).thenReturn(albumDto);
 
         AlbumDto albumByName = service.getAlbumByName("tes");
 
@@ -83,8 +85,8 @@ class AlbumServiceTest {
     @Test
     void save() {
         when(repository.save(any(Album.class))).thenReturn(album);
-        when(mapper.toAlbum(albumDto)).thenReturn(album);
-        when(mapper.toAlbumDto(any(Album.class))).thenReturn(albumDto);
+        when(mapper.map(albumDto, Album.class)).thenReturn(album);
+        when(mapper.map(album, AlbumDto.class)).thenReturn(albumDto);
 
         AlbumDto savedAlbum = service.save(albumDto);
 
@@ -95,7 +97,7 @@ class AlbumServiceTest {
     void update() {
         when(repository.findById(anyLong())).thenReturn(Optional.of(album));
         when(repository.save(any(Album.class))).thenReturn(album);
-        when(mapper.toAlbumDto(any(Album.class))).thenReturn(albumDto);
+        when(mapper.map(album, AlbumDto.class)).thenReturn(albumDto);
 
         AlbumDto updateAlbumDto = service.update(ALBUM_ID, albumDto);
 
@@ -111,6 +113,7 @@ class AlbumServiceTest {
     private Album buildAlbum() {
         return Album.builder()
                 .name("Test Album")
+                .songs(Collections.singletonList(new Song()))
                 .createdDate(LocalDate.now())
                 .build();
     }
