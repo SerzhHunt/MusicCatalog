@@ -3,6 +3,7 @@ package com.epam.musiccatalog.service.impl;
 import com.epam.musiccatalog.dto.SongDto;
 import com.epam.musiccatalog.exception.AlbumNotFoundException;
 import com.epam.musiccatalog.exception.SongNotFoundException;
+import com.epam.musiccatalog.mapper.SongMapper;
 import com.epam.musiccatalog.model.Album;
 import com.epam.musiccatalog.model.Song;
 import com.epam.musiccatalog.repository.AlbumRepository;
@@ -24,11 +25,13 @@ import java.util.stream.Collectors;
 public class SongServiceImpl implements SongService {
     private final SongRepository songRepository;
     private final AlbumRepository albumRepository;
-    private final MapperFacade mapper;
+    private final SongMapper songMapper;
 
     @Override
     public List<SongDto> getAll() {
-        return mapper.mapAsList(songRepository.findAll(), SongDto.class);
+        return songRepository.findAll().stream()
+                .map(songMapper::toSongDto)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -62,7 +65,7 @@ public class SongServiceImpl implements SongService {
             throw new AlbumNotFoundException(albumName);
         }
 
-        Song song = mapper.map(songDto, Song.class);
+        Song song = songMapper.toSong(songDto);
         song.setAlbum(album.get());
 
         Song savedSong = songRepository.save(song);
@@ -89,7 +92,7 @@ public class SongServiceImpl implements SongService {
     }
 
     private SongDto songToDto(Song song) {
-        SongDto songDto = mapper.map(song, SongDto.class);
+        SongDto songDto = songMapper.toSongDto(song);
         songDto.setAuthorNames(getAuthorNamesOfSong(song));
         songDto.setAlbumName(getAlbumNameOfSong(song));
         return songDto;

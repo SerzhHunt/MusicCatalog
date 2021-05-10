@@ -1,14 +1,14 @@
 package com.epam.musiccatalog.service.impl;
 
-import com.epam.musiccatalog.exception.AlbumNotFoundException;
-import com.epam.musiccatalog.model.Album;
 import com.epam.musiccatalog.dto.AlbumDto;
+import com.epam.musiccatalog.exception.AlbumNotFoundException;
+import com.epam.musiccatalog.mapper.AlbumMapper;
+import com.epam.musiccatalog.model.Album;
 import com.epam.musiccatalog.model.Song;
 import com.epam.musiccatalog.repository.AlbumRepository;
 import com.epam.musiccatalog.service.AlbumService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -23,11 +23,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AlbumServiceImpl implements AlbumService {
     private final AlbumRepository albumRepository;
-    private final MapperFacade mapper;
+    private final AlbumMapper albumMapper;
 
     @Override
     public List<AlbumDto> getAll() {
-        return mapper.mapAsList(albumRepository.findAll(), AlbumDto.class);
+        return albumRepository.findAll().stream()
+                .map(albumMapper::toAlbumDto)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -38,7 +40,7 @@ public class AlbumServiceImpl implements AlbumService {
             log.error("author not found by id {} ...", id);
             throw new AlbumNotFoundException(id);
         }
-        return albumToDto(album.get());
+        return albumMapper.toAlbumDto(album.get());
     }
 
     @Override
@@ -50,15 +52,15 @@ public class AlbumServiceImpl implements AlbumService {
             log.error(message);
             throw new AlbumNotFoundException(message);
         }
-        return albumToDto(album.get());
+        return albumMapper.toAlbumDto(album.get());
     }
 
     @Override
     @Transactional
     public AlbumDto save(AlbumDto albumDto) {
         albumDto.setCreatedDate(LocalDate.now());
-        Album savedAlbum = albumRepository.save(mapper.map(albumDto, Album.class));
-        return mapper.map(savedAlbum, AlbumDto.class);
+        Album savedAlbum = albumRepository.save(albumMapper.toAlbum(albumDto));
+        return albumMapper.toAlbumDto(savedAlbum);
     }
 
     @Override
@@ -72,7 +74,7 @@ public class AlbumServiceImpl implements AlbumService {
         }
 
         Album updatedAlbum = albumRepository.save(updateAlbum(albumById.get(), albumDto));
-        return albumToDto(updatedAlbum);
+        return albumMapper.toAlbumDto(updatedAlbum);
     }
 
     @Override
@@ -81,7 +83,7 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     private AlbumDto albumToDto(Album album) {
-        AlbumDto albumDto = mapper.map(album, AlbumDto.class);
+        AlbumDto albumDto = albumMapper.toAlbumDto(album);
         albumDto.setDuration(getSumSongsDurationFromAlbum(album));
         albumDto.setSongNames(getSongNamesOfAlbum(album));
         return albumDto;
@@ -94,6 +96,9 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     private Duration getSumSongsDurationFromAlbum(Album album) {
+        if (album.getSongs().isEmpty()) {
+            return Duration.ZERO;
+        }
         return Duration.ofMinutes(album.getSongs()
                 .stream()
                 .map(Song::getDuration)
