@@ -1,8 +1,8 @@
 package com.epam.musiccatalog.service.impl;
 
+import com.epam.musiccatalog.dto.AlbumDto;
 import com.epam.musiccatalog.exception.AlbumNotFoundException;
 import com.epam.musiccatalog.model.Album;
-import com.epam.musiccatalog.dto.AlbumDto;
 import com.epam.musiccatalog.model.Song;
 import com.epam.musiccatalog.repository.AlbumRepository;
 import com.epam.musiccatalog.service.AlbumService;
@@ -27,7 +27,9 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public List<AlbumDto> getAll() {
-        return mapper.mapAsList(albumRepository.findAll(), AlbumDto.class);
+        return albumRepository.findAll().stream()
+                .map(this::albumToDto)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -42,11 +44,23 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    public AlbumDto getAlbumByName(String albumName) {
+        Optional<Album> album = albumRepository.findAlbumWithPartOfName(albumName);
+
+        if (album.isEmpty()) {
+            String message = String.format("Album: %s not found", albumName);
+            log.error(message);
+            throw new AlbumNotFoundException(message);
+        }
+        return albumToDto(album.get());
+    }
+
+    @Override
     @Transactional
     public AlbumDto save(AlbumDto albumDto) {
+        albumDto.setCreatedDate(LocalDate.now());
         Album savedAlbum = albumRepository.save(mapper.map(albumDto, Album.class));
-        savedAlbum.setCreatedDate(LocalDate.now());
-        return mapper.map(savedAlbum, AlbumDto.class);
+        return albumToDto(savedAlbum);
     }
 
     @Override
@@ -82,6 +96,9 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     private Duration getSumSongsDurationFromAlbum(Album album) {
+        if (album.getSongs().isEmpty()) {
+            return Duration.ZERO;
+        }
         return Duration.ofMinutes(album.getSongs()
                 .stream()
                 .map(Song::getDuration)

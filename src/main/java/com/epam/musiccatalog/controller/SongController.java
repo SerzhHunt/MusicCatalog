@@ -1,13 +1,10 @@
 package com.epam.musiccatalog.controller;
 
 import com.epam.musiccatalog.dto.SongDto;
-import com.epam.musiccatalog.exception.AlbumNotFoundException;
 import com.epam.musiccatalog.service.impl.SongServiceImpl;
-import com.epam.musiccatalog.transfer.Validation;
+import com.epam.musiccatalog.valid.Validation;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -35,64 +33,64 @@ public class SongController {
 
     @Operation(summary = "Find all songs", tags = {"song"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
-                    content = @Content(array = @ArraySchema(schema =
-                    @Schema(implementation = SongDto.class)))),
-            @ApiResponse(responseCode = "500", description = "Server Error")})
+            @ApiResponse(responseCode = "200", description = "successful operation")})
     @GetMapping
     public ResponseEntity<List<SongDto>> getAllSongs() {
         return new ResponseEntity<>(songService.getAll(), HttpStatus.OK);
     }
 
-    @Operation(summary = "Get a song by id in album by id")
+    @Operation(summary = "Get a song by name in album by id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found the song",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = SongDto.class))}),
-            @ApiResponse(responseCode = "400", description = "Invalid id supplied", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Song not found", content = @Content),
-            @ApiResponse(responseCode = "500", description = "Server Error")})
-    @GetMapping("/{albumId}/{songId}")
-    public ResponseEntity<SongDto> getSongById(@PathVariable("albumId") Long albumId,
+            @ApiResponse(responseCode = "200", description = "Found the song"),
+            @ApiResponse(responseCode = "400", description = "Validation exception"),
+            @ApiResponse(responseCode = "404", description = "Song not found")})
+    @GetMapping("/{albumName}/{songId}")
+    public ResponseEntity<SongDto> getSongById(@Parameter(description = "Album name to be searched")
+                                               @PathVariable("albumName") String albumName,
+                                               @Parameter(description = "Id of song to be searched")
                                                @PathVariable("songId") Long songId) {
-        return new ResponseEntity<>(songService.getSongById(albumId, songId), HttpStatus.OK);
+        return new ResponseEntity<>(songService.getSongById(albumName, songId), HttpStatus.OK);
     }
 
     @Operation(summary = "Add new song", tags = {"song"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Song created",
-                    content = @Content(schema = @Schema(implementation = SongDto.class))),
-            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "201", description = "Song created"),
+            @ApiResponse(responseCode = "400", description = "Validation exception"),
             @ApiResponse(responseCode = "409", description = "Song already exists"),
             @ApiResponse(responseCode = "500", description = "Server Error")})
-    @PostMapping("{/albumId}")
-    public ResponseEntity<SongDto> saveSong(@Validated(value = Validation.New.class)
-                                            @PathVariable("albumId") Long albumId,
-                                            @RequestBody SongDto songDto) throws AlbumNotFoundException {
-        return new ResponseEntity<>(songService.save(albumId, songDto), HttpStatus.CREATED);
+    @PostMapping("/{albumName}/")
+    public ResponseEntity<SongDto> saveSong(@Parameter(description = "Album name to be searched")
+                                            @PathVariable("albumName") String albumName,
+                                            @Validated(value = Validation.OnCreate.class)
+                                            @RequestBody SongDto songDto) {
+        return new ResponseEntity<>(songService.save(albumName, songDto), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Update an existing song", tags = {"song"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation"),
-            @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
+            @ApiResponse(responseCode = "400", description = "Validation exception"),
             @ApiResponse(responseCode = "404", description = "Song not found"),
-            @ApiResponse(responseCode = "405", description = "Validation exception"),
+            @ApiResponse(responseCode = "405", description = "Method not allowed"),
             @ApiResponse(responseCode = "500", description = "Server Error")})
-    @PutMapping("{/songId}")
-    public ResponseEntity<SongDto> updateSong(@Validated(value = Validation.Exists.class)
+    @PutMapping("/{songId}")
+    public ResponseEntity<SongDto> updateSong(@Parameter(description = "Id of song to be searched")
                                               @PathVariable("songId") Long id,
+                                              @Parameter(description = "Updated song")
+                                              @Validated(value = Validation.OnUpdate.class)
                                               @RequestBody SongDto songDto) {
-        return new ResponseEntity<>(songService.update(id, songDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(songService.update(id, songDto), HttpStatus.OK);
     }
 
     @Operation(summary = "Deletes a song", tags = {"song"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "204", description = "Successful operation"),
             @ApiResponse(responseCode = "404", description = "Song not found"),
             @ApiResponse(responseCode = "500", description = "Server Error")})
     @DeleteMapping("{songId}")
-    public void deleteSong(@PathVariable("songId") Long id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteSong(@Parameter(description = "Id of song to be searched")
+                           @PathVariable("songId") Long id) {
         songService.delete(id);
     }
 }

@@ -1,0 +1,2160 @@
+{
+	"info": {
+		"_postman_id": "f0377571-e91b-4b32-ae11-e9201a907c34",
+		"name": "Music Catalog",
+		"description": "Contact Support:\n Name: Rakov Sergey\n Email: example@email.ru",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "songs",
+			"item": [
+				{
+					"name": "{song Id}",
+					"item": [
+						{
+							"name": "Update an existing song",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"authorNames\": [\n        \"author one, author two\",\n        \"author one, author two\"\n    ],\n    \"duration\": {\n        \"seconds\": -66249291,\n        \"nano\": -95293931,\n        \"negative\": false,\n        \"zero\": false,\n        \"units\": [\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 98504279,\n                    \"nano\": -23257158,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            },\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 27711684,\n                    \"nano\": -50430714,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            }\n        ]\n    },\n    \"name\": \"ut aliquip consectetur\",\n    \"Song album\": \"ex commodo\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/songs/:songId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"songs",
+										":songId"
+									],
+									"variable": [
+										{
+											"key": "songId",
+											"value": "18765101",
+											"description": "(Required) Id of song to be searched"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Successful operation",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"authorNames\": [\n        \"author one, author two\",\n        \"author one, author two\"\n    ],\n    \"duration\": {\n        \"seconds\": -66249291,\n        \"nano\": -95293931,\n        \"negative\": false,\n        \"zero\": false,\n        \"units\": [\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 98504279,\n                    \"nano\": -23257158,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            },\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 27711684,\n                    \"nano\": -50430714,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            }\n        ]\n    },\n    \"name\": \"ut aliquip consectetur\",\n    \"Song album\": \"ex commodo\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/songs/:songId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"songs",
+												":songId"
+											],
+											"variable": [
+												{
+													"key": "songId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Validation exception",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"authorNames\": [\n        \"author one, author two\",\n        \"author one, author two\"\n    ],\n    \"duration\": {\n        \"seconds\": -66249291,\n        \"nano\": -95293931,\n        \"negative\": false,\n        \"zero\": false,\n        \"units\": [\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 98504279,\n                    \"nano\": -23257158,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            },\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 27711684,\n                    \"nano\": -50430714,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            }\n        ]\n    },\n    \"name\": \"ut aliquip consectetur\",\n    \"Song album\": \"ex commodo\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/songs/:songId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"songs",
+												":songId"
+											],
+											"variable": [
+												{
+													"key": "songId"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Song not found",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"authorNames\": [\n        \"author one, author two\",\n        \"author one, author two\"\n    ],\n    \"duration\": {\n        \"seconds\": -66249291,\n        \"nano\": -95293931,\n        \"negative\": false,\n        \"zero\": false,\n        \"units\": [\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 98504279,\n                    \"nano\": -23257158,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            },\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 27711684,\n                    \"nano\": -50430714,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            }\n        ]\n    },\n    \"name\": \"ut aliquip consectetur\",\n    \"Song album\": \"ex commodo\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/songs/:songId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"songs",
+												":songId"
+											],
+											"variable": [
+												{
+													"key": "songId"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Method not allowed",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"authorNames\": [\n        \"author one, author two\",\n        \"author one, author two\"\n    ],\n    \"duration\": {\n        \"seconds\": -66249291,\n        \"nano\": -95293931,\n        \"negative\": false,\n        \"zero\": false,\n        \"units\": [\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 98504279,\n                    \"nano\": -23257158,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            },\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 27711684,\n                    \"nano\": -50430714,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            }\n        ]\n    },\n    \"name\": \"ut aliquip consectetur\",\n    \"Song album\": \"ex commodo\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/songs/:songId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"songs",
+												":songId"
+											],
+											"variable": [
+												{
+													"key": "songId"
+												}
+											]
+										}
+									},
+									"status": "Method Not Allowed",
+									"code": 405,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Server Error",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"authorNames\": [\n        \"author one, author two\",\n        \"author one, author two\"\n    ],\n    \"duration\": {\n        \"seconds\": -66249291,\n        \"nano\": -95293931,\n        \"negative\": false,\n        \"zero\": false,\n        \"units\": [\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 98504279,\n                    \"nano\": -23257158,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            },\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 27711684,\n                    \"nano\": -50430714,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            }\n        ]\n    },\n    \"name\": \"ut aliquip consectetur\",\n    \"Song album\": \"ex commodo\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/songs/:songId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"songs",
+												":songId"
+											],
+											"variable": [
+												{
+													"key": "songId"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Deletes a song",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/songs/:songId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"songs",
+										":songId"
+									],
+									"variable": [
+										{
+											"key": "songId",
+											"value": "18765101",
+											"description": "(Required) Id of song to be searched"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Successful operation",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/songs/:songId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"songs",
+												":songId"
+											],
+											"variable": [
+												{
+													"key": "songId"
+												}
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Song not found",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/songs/:songId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"songs",
+												":songId"
+											],
+											"variable": [
+												{
+													"key": "songId"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Server Error",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/songs/:songId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"songs",
+												":songId"
+											],
+											"variable": [
+												{
+													"key": "songId"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "{album Name}",
+					"item": [
+						{
+							"name": "Add new song",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"authorNames\": [\n        \"author one, author two\",\n        \"author one, author two\"\n    ],\n    \"duration\": {\n        \"seconds\": -66249291,\n        \"nano\": -95293931,\n        \"negative\": false,\n        \"zero\": false,\n        \"units\": [\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 98504279,\n                    \"nano\": -23257158,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            },\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 27711684,\n                    \"nano\": -50430714,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            }\n        ]\n    },\n    \"name\": \"ut aliquip consectetur\",\n    \"Song album\": \"ex commodo\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/songs/:albumName/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"songs",
+										":albumName",
+										""
+									],
+									"variable": [
+										{
+											"key": "albumName",
+											"value": "esse commodo",
+											"description": "(Required) Album name to be searched"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Song created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"authorNames\": [\n        \"author one, author two\",\n        \"author one, author two\"\n    ],\n    \"duration\": {\n        \"seconds\": -66249291,\n        \"nano\": -95293931,\n        \"negative\": false,\n        \"zero\": false,\n        \"units\": [\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 98504279,\n                    \"nano\": -23257158,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            },\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 27711684,\n                    \"nano\": -50430714,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            }\n        ]\n    },\n    \"name\": \"ut aliquip consectetur\",\n    \"Song album\": \"ex commodo\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/songs/:albumName/",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"songs",
+												":albumName",
+												""
+											],
+											"variable": [
+												{
+													"key": "albumName"
+												}
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Validation exception",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"authorNames\": [\n        \"author one, author two\",\n        \"author one, author two\"\n    ],\n    \"duration\": {\n        \"seconds\": -66249291,\n        \"nano\": -95293931,\n        \"negative\": false,\n        \"zero\": false,\n        \"units\": [\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 98504279,\n                    \"nano\": -23257158,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            },\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 27711684,\n                    \"nano\": -50430714,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            }\n        ]\n    },\n    \"name\": \"ut aliquip consectetur\",\n    \"Song album\": \"ex commodo\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/songs/:albumName/",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"songs",
+												":albumName",
+												""
+											],
+											"variable": [
+												{
+													"key": "albumName"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Song already exists",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"authorNames\": [\n        \"author one, author two\",\n        \"author one, author two\"\n    ],\n    \"duration\": {\n        \"seconds\": -66249291,\n        \"nano\": -95293931,\n        \"negative\": false,\n        \"zero\": false,\n        \"units\": [\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 98504279,\n                    \"nano\": -23257158,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            },\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 27711684,\n                    \"nano\": -50430714,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            }\n        ]\n    },\n    \"name\": \"ut aliquip consectetur\",\n    \"Song album\": \"ex commodo\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/songs/:albumName/",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"songs",
+												":albumName",
+												""
+											],
+											"variable": [
+												{
+													"key": "albumName"
+												}
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Server Error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"authorNames\": [\n        \"author one, author two\",\n        \"author one, author two\"\n    ],\n    \"duration\": {\n        \"seconds\": -66249291,\n        \"nano\": -95293931,\n        \"negative\": false,\n        \"zero\": false,\n        \"units\": [\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 98504279,\n                    \"nano\": -23257158,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            },\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 27711684,\n                    \"nano\": -50430714,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            }\n        ]\n    },\n    \"name\": \"ut aliquip consectetur\",\n    \"Song album\": \"ex commodo\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/songs/:albumName/",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"songs",
+												":albumName",
+												""
+											],
+											"variable": [
+												{
+													"key": "albumName"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Get a song by name in album by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/songs/:albumName/:songId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"songs",
+										":albumName",
+										":songId"
+									],
+									"variable": [
+										{
+											"key": "albumName",
+											"value": "esse commodo",
+											"description": "(Required) Album name to be searched"
+										},
+										{
+											"key": "songId",
+											"value": "18765101",
+											"description": "(Required) Id of song to be searched"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Found the song",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/songs/:albumName/:songId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"songs",
+												":albumName",
+												":songId"
+											],
+											"variable": [
+												{
+													"key": "albumName"
+												},
+												{
+													"key": "songId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Validation exception",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/songs/:albumName/:songId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"songs",
+												":albumName",
+												":songId"
+											],
+											"variable": [
+												{
+													"key": "albumName"
+												},
+												{
+													"key": "songId"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Song not found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/songs/:albumName/:songId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"songs",
+												":albumName",
+												":songId"
+											],
+											"variable": [
+												{
+													"key": "albumName"
+												},
+												{
+													"key": "songId"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Find all songs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/songs",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"songs"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/songs",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"songs"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "authors",
+			"item": [
+				{
+					"name": "{author Id}",
+					"item": [
+						{
+							"name": "Get a author by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/authors/:authorId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"authors",
+										":authorId"
+									],
+									"variable": [
+										{
+											"key": "authorId",
+											"value": "18765101",
+											"description": "(Required) Id of author to be searched"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Found the author",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/authors/:authorId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"authors",
+												":authorId"
+											],
+											"variable": [
+												{
+													"key": "authorId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Validation exception",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/authors/:authorId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"authors",
+												":authorId"
+											],
+											"variable": [
+												{
+													"key": "authorId"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Author not found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/authors/:authorId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"authors",
+												":authorId"
+											],
+											"variable": [
+												{
+													"key": "authorId"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Update an existing author",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"birthDate\": \"1950-12-17\",\n    \"firstname\": \"in proident sit laborum\",\n    \"lastname\": \"do voluptate\",\n    \"songNames\": [\n        \"song one, song two\",\n        \"song one, song two\"\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/authors/:authorId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"authors",
+										":authorId"
+									],
+									"variable": [
+										{
+											"key": "authorId",
+											"value": "18765101",
+											"description": "(Required) Id of author to be searched"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Author updated",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"birthDate\": \"1950-12-17\",\n    \"firstname\": \"in proident sit laborum\",\n    \"lastname\": \"do voluptate\",\n    \"songNames\": [\n        \"song one, song two\",\n        \"song one, song two\"\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/authors/:authorId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"authors",
+												":authorId"
+											],
+											"variable": [
+												{
+													"key": "authorId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Validation exception",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"birthDate\": \"1950-12-17\",\n    \"firstname\": \"in proident sit laborum\",\n    \"lastname\": \"do voluptate\",\n    \"songNames\": [\n        \"song one, song two\",\n        \"song one, song two\"\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/authors/:authorId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"authors",
+												":authorId"
+											],
+											"variable": [
+												{
+													"key": "authorId"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Author not found",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"birthDate\": \"1950-12-17\",\n    \"firstname\": \"in proident sit laborum\",\n    \"lastname\": \"do voluptate\",\n    \"songNames\": [\n        \"song one, song two\",\n        \"song one, song two\"\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/authors/:authorId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"authors",
+												":authorId"
+											],
+											"variable": [
+												{
+													"key": "authorId"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Server Error",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"birthDate\": \"1950-12-17\",\n    \"firstname\": \"in proident sit laborum\",\n    \"lastname\": \"do voluptate\",\n    \"songNames\": [\n        \"song one, song two\",\n        \"song one, song two\"\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/authors/:authorId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"authors",
+												":authorId"
+											],
+											"variable": [
+												{
+													"key": "authorId"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Deletes a author",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/authors/:authorId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"authors",
+										":authorId"
+									],
+									"variable": [
+										{
+											"key": "authorId",
+											"value": "18765101",
+											"description": "(Required) Id of author to be searched"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Successful operation",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/authors/:authorId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"authors",
+												":authorId"
+											],
+											"variable": [
+												{
+													"key": "authorId"
+												}
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Author not found",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/authors/:authorId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"authors",
+												":authorId"
+											],
+											"variable": [
+												{
+													"key": "authorId"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Server Error",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/authors/:authorId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"authors",
+												":authorId"
+											],
+											"variable": [
+												{
+													"key": "authorId"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Find all authors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/authors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authors"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/authors",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"authors"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Add new author",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"birthDate\": \"1950-12-17\",\n    \"firstname\": \"in proident sit laborum\",\n    \"lastname\": \"do voluptate\",\n    \"songNames\": [\n        \"song one, song two\",\n        \"song one, song two\"\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/authors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authors"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Author created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"birthDate\": \"1950-12-17\",\n    \"firstname\": \"in proident sit laborum\",\n    \"lastname\": \"do voluptate\",\n    \"songNames\": [\n        \"song one, song two\",\n        \"song one, song two\"\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/authors",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"authors"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Validation exception",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"birthDate\": \"1950-12-17\",\n    \"firstname\": \"in proident sit laborum\",\n    \"lastname\": \"do voluptate\",\n    \"songNames\": [\n        \"song one, song two\",\n        \"song one, song two\"\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/authors",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"authors"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Author already exists",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"birthDate\": \"1950-12-17\",\n    \"firstname\": \"in proident sit laborum\",\n    \"lastname\": \"do voluptate\",\n    \"songNames\": [\n        \"song one, song two\",\n        \"song one, song two\"\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/authors",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"authors"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Server Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"birthDate\": \"1950-12-17\",\n    \"firstname\": \"in proident sit laborum\",\n    \"lastname\": \"do voluptate\",\n    \"songNames\": [\n        \"song one, song two\",\n        \"song one, song two\"\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/authors",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"authors"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "albums",
+			"item": [
+				{
+					"name": "{album Id}",
+					"item": [
+						{
+							"name": "Get a album by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/albums/:albumId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"albums",
+										":albumId"
+									],
+									"variable": [
+										{
+											"key": "albumId",
+											"value": "18765101",
+											"description": "(Required) Id of album to be searched"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Found the album",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/albums/:albumId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"albums",
+												":albumId"
+											],
+											"variable": [
+												{
+													"key": "albumId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Invalid id supplied",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/albums/:albumId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"albums",
+												":albumId"
+											],
+											"variable": [
+												{
+													"key": "albumId"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Album not found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/albums/:albumId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"albums",
+												":albumId"
+											],
+											"variable": [
+												{
+													"key": "albumId"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Update an existing album",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"ut nulla nostrud esse\",\n    \"createdDate\": \"2005-05-22\",\n    \"duration\": {\n        \"seconds\": -90862290,\n        \"nano\": -30395908,\n        \"negative\": false,\n        \"zero\": true,\n        \"units\": [\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 66192111,\n                    \"nano\": -63758080,\n                    \"negative\": true,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            },\n            {\n                \"dateBased\": false,\n                \"timeBased\": true,\n                \"duration\": {\n                    \"seconds\": 33582665,\n                    \"nano\": -34782419,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            }\n        ]\n    },\n    \"songNames\": [\n        \"song name one, song name two\",\n        \"song name one, song name two\"\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/albums/:albumId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"albums",
+										":albumId"
+									],
+									"variable": [
+										{
+											"key": "albumId",
+											"value": "18765101",
+											"description": "(Required) Id of album to be searched"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Successful operation",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"ut nulla nostrud esse\",\n    \"createdDate\": \"2005-05-22\",\n    \"duration\": {\n        \"seconds\": -90862290,\n        \"nano\": -30395908,\n        \"negative\": false,\n        \"zero\": true,\n        \"units\": [\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 66192111,\n                    \"nano\": -63758080,\n                    \"negative\": true,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            },\n            {\n                \"dateBased\": false,\n                \"timeBased\": true,\n                \"duration\": {\n                    \"seconds\": 33582665,\n                    \"nano\": -34782419,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            }\n        ]\n    },\n    \"songNames\": [\n        \"song name one, song name two\",\n        \"song name one, song name two\"\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/albums/:albumId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"albums",
+												":albumId"
+											],
+											"variable": [
+												{
+													"key": "albumId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Validation exception",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"ut nulla nostrud esse\",\n    \"createdDate\": \"2005-05-22\",\n    \"duration\": {\n        \"seconds\": -90862290,\n        \"nano\": -30395908,\n        \"negative\": false,\n        \"zero\": true,\n        \"units\": [\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 66192111,\n                    \"nano\": -63758080,\n                    \"negative\": true,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            },\n            {\n                \"dateBased\": false,\n                \"timeBased\": true,\n                \"duration\": {\n                    \"seconds\": 33582665,\n                    \"nano\": -34782419,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            }\n        ]\n    },\n    \"songNames\": [\n        \"song name one, song name two\",\n        \"song name one, song name two\"\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/albums/:albumId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"albums",
+												":albumId"
+											],
+											"variable": [
+												{
+													"key": "albumId"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Album not found",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"ut nulla nostrud esse\",\n    \"createdDate\": \"2005-05-22\",\n    \"duration\": {\n        \"seconds\": -90862290,\n        \"nano\": -30395908,\n        \"negative\": false,\n        \"zero\": true,\n        \"units\": [\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 66192111,\n                    \"nano\": -63758080,\n                    \"negative\": true,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            },\n            {\n                \"dateBased\": false,\n                \"timeBased\": true,\n                \"duration\": {\n                    \"seconds\": 33582665,\n                    \"nano\": -34782419,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            }\n        ]\n    },\n    \"songNames\": [\n        \"song name one, song name two\",\n        \"song name one, song name two\"\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/albums/:albumId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"albums",
+												":albumId"
+											],
+											"variable": [
+												{
+													"key": "albumId"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Server Error",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"ut nulla nostrud esse\",\n    \"createdDate\": \"2005-05-22\",\n    \"duration\": {\n        \"seconds\": -90862290,\n        \"nano\": -30395908,\n        \"negative\": false,\n        \"zero\": true,\n        \"units\": [\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 66192111,\n                    \"nano\": -63758080,\n                    \"negative\": true,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            },\n            {\n                \"dateBased\": false,\n                \"timeBased\": true,\n                \"duration\": {\n                    \"seconds\": 33582665,\n                    \"nano\": -34782419,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            }\n        ]\n    },\n    \"songNames\": [\n        \"song name one, song name two\",\n        \"song name one, song name two\"\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/albums/:albumId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"albums",
+												":albumId"
+											],
+											"variable": [
+												{
+													"key": "albumId"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Deletes a album",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/albums/:albumId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"albums",
+										":albumId"
+									],
+									"variable": [
+										{
+											"key": "albumId",
+											"value": "18765101",
+											"description": "(Required) Id of album to be searched"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Successful operation",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/albums/:albumId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"albums",
+												":albumId"
+											],
+											"variable": [
+												{
+													"key": "albumId"
+												}
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Album not found",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/albums/:albumId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"albums",
+												":albumId"
+											],
+											"variable": [
+												{
+													"key": "albumId"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Server Error",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/albums/:albumId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"albums",
+												":albumId"
+											],
+											"variable": [
+												{
+													"key": "albumId"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Find all albums",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/albums",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"albums"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Successful operation",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/albums",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"albums"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Add new album",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"ut nulla nostrud esse\",\n    \"createdDate\": \"2005-05-22\",\n    \"duration\": {\n        \"seconds\": -90862290,\n        \"nano\": -30395908,\n        \"negative\": false,\n        \"zero\": true,\n        \"units\": [\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 66192111,\n                    \"nano\": -63758080,\n                    \"negative\": true,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            },\n            {\n                \"dateBased\": false,\n                \"timeBased\": true,\n                \"duration\": {\n                    \"seconds\": 33582665,\n                    \"nano\": -34782419,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            }\n        ]\n    },\n    \"songNames\": [\n        \"song name one, song name two\",\n        \"song name one, song name two\"\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/albums",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"albums"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Album created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"ut nulla nostrud esse\",\n    \"createdDate\": \"2005-05-22\",\n    \"duration\": {\n        \"seconds\": -90862290,\n        \"nano\": -30395908,\n        \"negative\": false,\n        \"zero\": true,\n        \"units\": [\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 66192111,\n                    \"nano\": -63758080,\n                    \"negative\": true,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            },\n            {\n                \"dateBased\": false,\n                \"timeBased\": true,\n                \"duration\": {\n                    \"seconds\": 33582665,\n                    \"nano\": -34782419,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            }\n        ]\n    },\n    \"songNames\": [\n        \"song name one, song name two\",\n        \"song name one, song name two\"\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/albums",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"albums"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Invalid input",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"ut nulla nostrud esse\",\n    \"createdDate\": \"2005-05-22\",\n    \"duration\": {\n        \"seconds\": -90862290,\n        \"nano\": -30395908,\n        \"negative\": false,\n        \"zero\": true,\n        \"units\": [\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 66192111,\n                    \"nano\": -63758080,\n                    \"negative\": true,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            },\n            {\n                \"dateBased\": false,\n                \"timeBased\": true,\n                \"duration\": {\n                    \"seconds\": 33582665,\n                    \"nano\": -34782419,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            }\n        ]\n    },\n    \"songNames\": [\n        \"song name one, song name two\",\n        \"song name one, song name two\"\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/albums",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"albums"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Album already exists",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"ut nulla nostrud esse\",\n    \"createdDate\": \"2005-05-22\",\n    \"duration\": {\n        \"seconds\": -90862290,\n        \"nano\": -30395908,\n        \"negative\": false,\n        \"zero\": true,\n        \"units\": [\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 66192111,\n                    \"nano\": -63758080,\n                    \"negative\": true,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            },\n            {\n                \"dateBased\": false,\n                \"timeBased\": true,\n                \"duration\": {\n                    \"seconds\": 33582665,\n                    \"nano\": -34782419,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            }\n        ]\n    },\n    \"songNames\": [\n        \"song name one, song name two\",\n        \"song name one, song name two\"\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/albums",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"albums"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Server Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"ut nulla nostrud esse\",\n    \"createdDate\": \"2005-05-22\",\n    \"duration\": {\n        \"seconds\": -90862290,\n        \"nano\": -30395908,\n        \"negative\": false,\n        \"zero\": true,\n        \"units\": [\n            {\n                \"dateBased\": false,\n                \"timeBased\": false,\n                \"duration\": {\n                    \"seconds\": 66192111,\n                    \"nano\": -63758080,\n                    \"negative\": true,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            },\n            {\n                \"dateBased\": false,\n                \"timeBased\": true,\n                \"duration\": {\n                    \"seconds\": 33582665,\n                    \"nano\": -34782419,\n                    \"negative\": false,\n                    \"zero\": true\n                },\n                \"durationEstimated\": true\n            }\n        ]\n    },\n    \"songNames\": [\n        \"song name one, song name two\",\n        \"song name one, song name two\"\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/albums",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"albums"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Get a album by name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/albums/name/:albumName",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"albums",
+								"name",
+								":albumName"
+							],
+							"variable": [
+								{
+									"key": "albumName",
+									"value": "esse commodo",
+									"description": "(Required) Album name or part of the name"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Found the album",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/albums/name/:albumName",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"albums",
+										"name",
+										":albumName"
+									],
+									"variable": [
+										{
+											"key": "albumName"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Invalid name supplied",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/albums/name/:albumName",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"albums",
+										"name",
+										":albumName"
+									],
+									"variable": [
+										{
+											"key": "albumName"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Album not found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/albums/name/:albumName",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"albums",
+										"name",
+										":albumName"
+									],
+									"variable": [
+										{
+											"key": "albumName"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}

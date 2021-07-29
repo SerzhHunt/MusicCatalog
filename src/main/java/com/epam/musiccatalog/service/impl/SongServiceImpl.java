@@ -14,7 +14,8 @@ import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -27,37 +28,46 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public List<SongDto> getAll() {
-        return mapper.mapAsList(songRepository.findAll(), SongDto.class);
+        return songRepository.findAll().stream()
+                .map(this::songToDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public SongDto getSongById(Long albumId, Long songId) {
-        Optional<Album> album = albumRepository.findById(albumId);
-        Optional<Song> song = songRepository.findSongByIdInAlbumById(albumId, songId);
+    public SongDto getSongById(String albumName, Long songId) {
+        Optional<Album> album = albumRepository.findAlbumWithPartOfName(albumName);
 
         if (album.isEmpty()) {
-            log.error("album not found by id {} ...", albumId);
-            throw new AlbumNotFoundException(albumId);
+            String errorMsg = String.format("Album with name is \"%s\" not found!", albumName);
+            log.error(errorMsg);
+            throw new AlbumNotFoundException(albumName);
         }
 
+        Optional<Song> song = songRepository.findSongByIdInAlbumById(album.get().getId(), songId);
+
         if (song.isEmpty()) {
-            log.error("song not found by id {} ...", songId);
+            log.error("Song not found by id {} ...", songId);
             throw new SongNotFoundException(songId);
         }
+
         return songToDto(song.get());
     }
 
     @Override
     @Transactional
-    public SongDto save(Long albumId, SongDto songDto) {
-        Optional<Album> album = albumRepository.findById(albumId);
+    public SongDto save(String albumName, SongDto songDto) {
+        Optional<Album> album = albumRepository.findAlbumWithPartOfName(albumName);
 
         if (album.isEmpty()) {
-            log.error("album not found by id {} ...", albumId);
-            throw new AlbumNotFoundException(albumId);
+            String errorMsg = String.format("Album with name is \"%s\" not found!", albumName);
+            log.error(errorMsg);
+            throw new AlbumNotFoundException(albumName);
         }
 
-        Song savedSong = songRepository.save(mapper.map(songDto, Song.class));
+        Song song = mapper.map(songDto, Song.class);
+        song.setAlbum(album.get());
+
+        Song savedSong = songRepository.save(song);
         return songToDto(savedSong);
     }
 
@@ -88,17 +98,16 @@ public class SongServiceImpl implements SongService {
     }
 
     private Song updateSong(Song song, SongDto songDto) {
-        song.setId(songDto.getId());
         song.setName(songDto.getName());
         song.setDuration(songDto.getDuration());
         return song;
     }
 
-    private Set<String> getAuthorNamesOfSong(Song song) {
+    private List<String> getAuthorNamesOfSong(Song song) {
         return song.getAuthors()
                 .stream()
                 .map(author -> author.getFirstname().concat(" ").concat(author.getLastname()))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     private String getAlbumNameOfSong(Song song) {

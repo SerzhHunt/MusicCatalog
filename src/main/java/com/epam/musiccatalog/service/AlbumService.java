@@ -9,6 +9,8 @@ public interface AlbumService {
 
     AlbumDto getAlbumById(Long id);
 
+    AlbumDto getAlbumByName(String albumName);
+
     AlbumDto save(AlbumDto albumDto);
 
     AlbumDto update(Long id, AlbumDto albumDto);

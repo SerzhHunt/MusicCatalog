@@ -8,9 +8,9 @@ public interface SongService {
 
     List<SongDto> getAll();
 
-    SongDto getSongById(Long albumId, Long songId);
+    SongDto getSongById(String albumName, Long songId);
 
-    SongDto save(Long albumId, SongDto songDto);
+    SongDto save(String albumName, SongDto songDto);
 
     SongDto update(Long songId, SongDto songDto);
 

@@ -1,7 +1,10 @@
 package com.epam.musiccatalog.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,9 +19,12 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
+@Builder
 @Entity(name = "Song")
 @Table(name = "song")
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class Song extends AbstractEntity {
 
@@ -28,12 +34,12 @@ public class Song extends AbstractEntity {
     @Column(name = "duration", nullable = false)
     private Duration duration;
 
-    @ManyToMany(mappedBy = "songs", fetch = FetchType.LAZY,
+    @ManyToMany(mappedBy = "songs", fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Author> authors = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @ManyToOne(fetch = FetchType.EAGER,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "album_id",
             foreignKey = @ForeignKey(name = "fk_album_id"))
     private Album album;

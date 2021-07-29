@@ -1,9 +1,9 @@
 package com.epam.musiccatalog.service.impl;
 
+import com.epam.musiccatalog.dto.AuthorDto;
 import com.epam.musiccatalog.exception.AuthorNotFoundException;
 import com.epam.musiccatalog.model.Author;
 import com.epam.musiccatalog.model.Song;
-import com.epam.musiccatalog.dto.AuthorDto;
 import com.epam.musiccatalog.repository.AuthorRepository;
 import com.epam.musiccatalog.service.AuthorService;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,9 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public List<AuthorDto> getAll() {
-        return mapper.mapAsList(authorRepository.findAll(), AuthorDto.class);
+        return authorRepository.findAll().stream()
+                .map(this::authorToDto)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -79,10 +81,8 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     private Author updateAuthor(Author author, AuthorDto authorDto) {
-        author.setId(author.getId());
         author.setFirstname(authorDto.getFirstname());
         author.setLastname(author.getLastname());
-        author.setBirthDate(authorDto.getBirthDate());
         return author;
     }
 }
